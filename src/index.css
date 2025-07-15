@@ -1,0 +1,236 @@
+@import "tailwindcss";
+@layer base {
+  :root {
+    /* Couleurs principales */
+    --background: #FEFEE6;       
+    --fenetre: #D4D4C7;          
+    --bordure: #4A4A4A;         
+    --primaire: #0E100F;         
+    --secondaire: #E07A00;      
+    --vague: #64a7f4;
+
+    /* Variables de couleur directement utilisables */
+    --color-background: var(--background);
+    --color-fenetre: var(--fenetre);
+    --color-bordure: var(--bordure);
+    --color-primaire: var(--primaire);
+    --color-secondaire: var(--secondaire);
+    --color-vague: var(--vague);
+  }
+  .sombre {
+    --background: #0E100F;
+    --fenetre: #0E100F;
+    --bordure: #0E100F;
+    --primaire: #FCFFFF;
+    --secondaire: #fb8a01;
+    --vague: #1b2d41;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-primaire);
+    transition: color 300ms, background-color 300ms;
+    font-feature-settings: "lig" 1, "calt" 1;
+    margin: 0;
+    padding: 0;
+  }
+
+  .bg-bordure {
+  background-color: var(--color-bordure);
+}
+
+*{
+    font-family: Consolas, sans-serif;
+}
+.modal-enter {
+  opacity: 0;
+  transform: scale(0.7);
+}
+.modal-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+.modal-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+.modal-exit-active {
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 300ms ease-in, transform 300ms ease-in;
+}
+
+  .text-secondaire {
+    color: var(--color-secondaire);
+  }
+
+  .text-primaire {
+    color: var(--color-primaire);
+  }
+
+  .text-fenetre {
+    color: var(--color-fenetre);
+  }
+
+}
+
+
+@layer utilities {
+
+  @media (min-width: 640px) {
+    .container {
+      max-width: 640px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      max-width: 768px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      max-width: 1024px;
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .container {
+      max-width: 1400px;
+    }
+  }
+}
+
+/* Styles pour les composants - remplacement des @apply */
+.PassageBouton {
+  transition: transform 300ms ease;
+}
+.PassageBouton:hover {
+  transform: scale(1.5);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.bouton {
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  background-color: var(--color-primaire);
+  font-weight: 500;
+  transition: all 300ms ease;
+}
+.bouton:hover {
+  transform: scale(1.5);
+}
+.bouton:active {
+  transform: scale(0.5);
+}
+
+#root {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+
+/* Utilitaires supplémentaires pour remplacer les @apply */
+.transition-colors {
+  transition: color 300ms ease, background-color 300ms ease;
+}
+
+.duration-300 {
+  transition-duration: 300ms;
+}
+
+.transition-all {
+  transition-property: all;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+/* Ajout des classes pour les effets de survol */
+.hover\:scale-105:hover {
+  transform: scale(1.05);
+}
+
+.active\:scale-95:active {
+  transform: scale(0.95);
+}
+
+.hover\:shadow-lg:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Classe pour le fond utilisant les variables CSS */
+.bg-background {
+  background-color: var(--color-background);
+}
+
+/* Classe pour la couleur de texte utilisant les variables CSS */
+.text-primaire {
+  color: var(--color-primaire);
+}
+
+/* Classe pour le fond des boutons utilisant la variable primaire */
+.bg-primaire {
+  background-color: var(--color-primaire);
+}
+
+/*Ajout des animations*/
+@layer utilities 
+{
+  /*Anim de chargment*/
+  @keyframes Chargement 
+  {
+    0% 
+    {
+      transform: translateX(-100%)
+    }
+
+    100%
+    {
+      transform: translateX(250%)
+    }
+  }
+
+  .animate-barre-chargement
+  {
+    animation: loading 1s ease infinite;
+  }
+
+  /*Anim de curseur*/
+
+  @keyframes clignote 
+  {
+    0%, 100%
+    {
+      opacity: 1;
+    }
+
+    50%
+    {
+      opacity: 0;
+    }
+  }
+
+  .animate-clignote
+  {
+    animation: clignote 0.8s step-end infinite;
+  }
+
+}
