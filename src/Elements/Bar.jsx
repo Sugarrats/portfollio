@@ -8,36 +8,26 @@ export default function Modal({ isOpen, onClose, title = "bar", children }) {
   const [isMobile, setIsMobile] = useState(false);
 
   const LiensBar = [
-    // github
     {
       name: "github du projet",
       href: "https://github.com/Sugarrats/Site-Bar",
     },
-
-    // SEO
     {
       name: "compte rendu SEO",
       href: "/Compte_rendu_SEO.pdf",
     },
-
-    // BD
     {
       name: "compte rendu base de données",
       href: "/Compte_rendu_bd.pdf",
     },
-
-    // html CSS
     {
       name: "compte rendu html et css",
       href: "/Compte_rendu_HTML_CSS.pdf",
     },
-
-    // charte graphique
     {
       name: "charte graphique",
       href: "/Charte_graphique.pdf",
     },
-
   ];
 
   useEffect(() => {
@@ -104,7 +94,7 @@ export default function Modal({ isOpen, onClose, title = "bar", children }) {
           </div>
 
           {/* Body scrollable */}
-          <section className="p-4 overflow-y-auto flex-1 flex justify-center space-x-8">
+          <section className="p-4 overflow-y-auto flex-1 flex flex-col sm:flex-row sm:justify-center gap-4 sm:gap-8">
             {children ??
               LiensBar.map((item) =>
                 item.name === "github du projet" ? (
