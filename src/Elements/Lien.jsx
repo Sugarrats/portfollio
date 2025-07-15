@@ -14,7 +14,7 @@ const LiensItems = [
   },
   {
     name: "cv",
-    href: "/CV DEV.pdf",
+    href: "/CV_DEV.pdf",
   },
 ];
 
