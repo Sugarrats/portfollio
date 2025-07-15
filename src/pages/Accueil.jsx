@@ -1,6 +1,6 @@
 import { ChangementTheme } from "../Elements/ChangementTheme"
-import { Presentation } from "../Elements/presentation"
-import { Footer } from "../Elements/footer"
+import { Presentation } from "../Elements/Presentation"
+import { Footer } from "../Elements/Footer"
 import { Vague } from "../Elements/Vague"
 
 export const Accueil = () => {
