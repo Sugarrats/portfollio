@@ -1,3 +1,5 @@
+// Cette page va présenter mes liens vers mes réseaux sociaux et mon CV.
+
 import React, { useRef, useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import Typewriter from "typewriter-effect";

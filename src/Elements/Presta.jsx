@@ -1,3 +1,5 @@
+// Cette page va présenter mes compétences sur prestashop, avec des liens vers des documents PDF.
+
 import React, { useRef, useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { FileUser } from "lucide-react";

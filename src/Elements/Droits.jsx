@@ -1,3 +1,5 @@
+// Cette page va présenter la gestion des droits que j'ai appris pendant ma formation.
+
 import React, { useRef, useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { FileUser } from "lucide-react";

@@ -1,3 +1,5 @@
+// Cette page va présenter mon stage de fin d'étude, avec des liens vers le rapport de stage et le github du projet.
+
 import React, { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import Draggable from "react-draggable";

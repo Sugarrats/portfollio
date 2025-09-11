@@ -1,3 +1,5 @@
+// Projet de bar première année
+
 import React, { useRef, useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { Github, FileUser } from "lucide-react";

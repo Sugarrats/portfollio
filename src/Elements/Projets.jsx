@@ -1,3 +1,5 @@
+// Cette page va présenter mes projets réalisés durant ma formation.
+
 import React, { useRef, useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { FolderOpen } from "lucide-react";

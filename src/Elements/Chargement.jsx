@@ -1,3 +1,5 @@
+// Cette page affiche une animation de chargement avec une barre de progression et un effet de machine à écrire.
+
 import { useEffect, useState } from "react";
 
 export const Chargement = ({ onComplete }) => {

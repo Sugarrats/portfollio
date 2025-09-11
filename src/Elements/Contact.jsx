@@ -1,3 +1,5 @@
+// Cette page va permettre à l'utilisateur de me contacter via un formulaire sécurisé.
+
 import React, { useRef, useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { Mailbox } from "lucide-react";

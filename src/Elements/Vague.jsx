@@ -1,3 +1,5 @@
+// Cette page affiche une vague animée en bas de l'écran, avec une couleur qui s'adapte au thème actuel (clair ou sombre).
+
 import React, { useEffect, useState } from 'react';
 import Wave from 'react-wavify';
 import '../index.css'; // Deux points car on remonte

@@ -1,3 +1,5 @@
+// Cette page est le footer du site, affichant le copyright.
+
 export const Footer = () => {
     return (
         <footer className="w-full flex justify-center items-center text-primaire p-4">

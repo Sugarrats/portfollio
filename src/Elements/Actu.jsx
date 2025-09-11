@@ -1,3 +1,5 @@
+// Cette oage va présenter mes actualités ( stages / alternances ).
+
 import React, { useRef, useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { Files } from "lucide-react";

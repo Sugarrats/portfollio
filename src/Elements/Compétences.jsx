@@ -1,3 +1,5 @@
+// Cette page va présenter mes compétences avec des filtres pour chaque compétences
+
 import React, { useRef, useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { FolderOpen } from "lucide-react";
@@ -30,7 +32,7 @@ export default function ModalCompétences({ isOpen, onClose, title = "compétenc
     { id: " gestion it", title: "glpi", description: "gestion de parc informatique et tickets de support." },
   ];
 
-  // Filtres
+  // Gestion des filtres
   const filters = ["all", ...new Set(compétences.map((c) => c.id))];
 
   useEffect(() => {

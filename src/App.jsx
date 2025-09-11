@@ -1,3 +1,5 @@
+// Cette page est le composant principal de l'application React, gérant l'état de chargement et les routes.
+
 import React, { useState } from 'react';
 import { Chargement } from './Elements/Chargement';
 import './index.css';

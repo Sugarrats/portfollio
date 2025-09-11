@@ -1,3 +1,5 @@
+// Cette page gére le chagement de thème ( clair / sombre ).
+
 import { Sun, Moon } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { cn } from "@/librairie/outils";

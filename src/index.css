@@ -1,3 +1,5 @@
+/* Fichier CSS principal utilisant Tailwind CSS avec des variables CSS pour la gestion des thèmes clair et sombre */
+
 @import "tailwindcss";
 @layer base {
   :root {
