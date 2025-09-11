@@ -34,7 +34,7 @@ export const Vague = () => {
         options={{
           height: 15,
           amplitude: 50,
-          speed: 20,
+          speed: 5,
           points: 4
         }}
       />
