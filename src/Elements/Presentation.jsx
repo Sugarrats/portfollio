@@ -45,7 +45,7 @@ export const Presentation = () => {
                         <div className="p-2 text-center">
                             <h1 className="flex flex-col sm:flex-row sm:justify-center sm:items-center gap-1">
                                 <span className="text-primaire text-xl sm:text-2xl font-bold">
-                                    bonjour!
+                                    bonjour !
                                 </span>
                                 <span className="text-secondaire text-xl sm:text-2xl font-bold">
                                     je suis adrien
