@@ -20,7 +20,7 @@ export const Accueil = () => {
         </main>
 
         {/*Effet de vague pas sur*/}
-           {/*<Vague />*/} 
+           {<Vague />} 
 
         {/*Footer*/}
             <Footer />
