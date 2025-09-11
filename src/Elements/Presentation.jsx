@@ -1,5 +1,7 @@
 // Cette page est la page de présentation principale du portfolio, avec des boutons pour accéder aux différentes sections.
 
+// Chaque section ouvre une modal correspondante.
+
 import React, { useState } from 'react';
 import { MessageCircleQuestionMark, FolderOpen, Link, Newspaper, Mail } from 'lucide-react';
 import Typewriter from "typewriter-effect";
