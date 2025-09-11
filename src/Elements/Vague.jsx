@@ -33,8 +33,8 @@ export const Vague = () => {
         style={{ display: 'flex' }}
         options={{
           height: 15,
-          amplitude: 50,
-          speed: 3,
+          amplitude: 40,
+          speed: 0.5,
           points: 7
         }}
       />
