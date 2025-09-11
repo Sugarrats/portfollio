@@ -13,7 +13,7 @@ export default function ModalCompétences({ isOpen, onClose, title = "compétenc
   // Liste des compétences
   const compétences = [
 
-    // Développement logiciel
+    // Compétences Développement logiciel
     { id: "développement", title: "c#", description: "développement d’applications orientées objet." },
     { id: "développement", title: "c++", description: "programmation bas-niveau et logiciels performants." },
     { id: "développement", title: "visual basic", description: "création d’outils et automatisations pour excel." },
