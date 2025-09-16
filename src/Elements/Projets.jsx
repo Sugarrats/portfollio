@@ -172,7 +172,7 @@ export default function Modal({
             </div>
           </div>
 
-          {/* body */}
+          {/* Présentations des cprojets accomplis pendant ma formation */}
           <section className="p-4 overflow-y-auto flex-1 flex flex-col items-center gap-4 min-h-[150px] text-center">
             <p className="text-left text-sm sm:text-base w-full max-w-full">
               <Typewriter

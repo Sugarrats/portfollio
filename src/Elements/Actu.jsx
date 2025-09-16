@@ -1,4 +1,4 @@
-// Cette page va présenter mes actualités (stages / alternances).
+// Cette oage va présenter mes actualités ( stages / alternances ).
 
 import React, { useRef, useEffect, useState } from "react";
 import Draggable from "react-draggable";
@@ -58,7 +58,7 @@ export default function Modal({
               onClick={onClose}
               className="text-fenetre text-xl font-bold focus:outline-none"
               type="button"
-              aria-label="Fermer la fenêtre"
+              aria-label="Close modal"
             >
               ✕
             </button>
@@ -70,7 +70,7 @@ export default function Modal({
               <Typewriter
                 options={{
                   strings: [
-                    "Ici, vous pouvez voir un suivi de mes expériences professionnelles et de mes stages.",
+                    "ici vous pouvez voir un suivi de mes expériences professionnelles et de mes stages.",
                   ],
                   autoStart: true,
                   loop: false,
@@ -91,7 +91,7 @@ export default function Modal({
                   <Files size={80} />
                 </button>
                 <span className="mt-2 text-sm font-bold text-center transition duration-300 hover:scale-104 max-w-xs">
-                  Stage à l&apos;IMFT
+                  stage à l&apos;IMFT
                 </span>
               </div>
             )}
