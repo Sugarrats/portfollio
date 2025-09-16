@@ -9,7 +9,8 @@ export default function ContactModal({ isOpen, onClose }) {
   const nodeRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  const [lastSubmit, setLastSubmit] = useState(0); // anti-spam rapide
+  // anti spam
+  const [lastSubmit, setLastSubmit] = useState(0); 
 
   useEffect(() => {
     const handleResize = () => {
@@ -89,16 +90,16 @@ export default function ContactModal({ isOpen, onClose }) {
       return;
     }
 
-    sanitizedData.access_key = "e72db399-2c6c-42cb-bc0d-fb231b6c817c"; 
+    // Ajoute la clé d'accès et les données nettoyées dans FormData
+    formData.set("name", sanitizedData.name);
+    formData.set("email", sanitizedData.email);
+    formData.set("message", sanitizedData.message);
+    formData.append("access_key", "e72db399-2c6c-42cb-bc0d-fb231b6c817c");
 
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(sanitizedData),
+        body: formData,
       }).then((res) => res.json());
       console.log(res);
 
@@ -125,6 +126,7 @@ export default function ContactModal({ isOpen, onClose }) {
       );
     }
   };
+
 
   return (
     <div className="fixed inset-0 bg-background/50 pointer-events-none flex justify-center items-center z-[99999] p-4 sm:p-6">
