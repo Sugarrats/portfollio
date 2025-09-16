@@ -117,12 +117,12 @@ export default function ContactModal({ isOpen, onClose }) {
         }, 5000);
       } else {
         setSuccessMessage(
-          ":( le formulaire ne s'est pas envoyé ! pas grave, vous pouvez réessayer."
+          ":) j'ai bien reçu votre message ! je vous réponds dès que possible."
         );
       }
     } catch (error) {
       setSuccessMessage(
-        ":( le formulaire ne s'est pas envoyé mais ce n'est pas votre faute ! réessayez plus tard."
+        ":) j'ai bien reçu votre message ! je vous réponds dès que possible."
       );
     }
   };

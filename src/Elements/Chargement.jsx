@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export const Chargement = ({ onComplete }) => {
   const [text, setText] = useState("");
   const [progress, setProgress] = useState(0); // État pour la progression de la barre de chargement
-  const TexteComplet = "<bienvenue sur mon portfollio />";
+  const TexteComplet = "<bienvenue sur mon portfolio />";
 
   // Animation du texte
   useEffect(() => {
