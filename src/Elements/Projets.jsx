@@ -14,7 +14,8 @@ export default function Modal({
   setIsVeilleOpen,
   setIsPrestaOpen,
   setIsDroitsOpen,
-  setIsStagesOpen, // <-- new prop to handle stage projects
+  setIsStagesOpen, 
+  setIsAlternanceOpen,
   children,
 }) {
   const nodeRef = useRef(null);
@@ -97,7 +98,7 @@ export default function Modal({
     {
       tags: ["c#", "web", "alternance", "api"],
       title: "développement d'une application web de gestion interne",
-      onClick: () => setIsDroitsOpen(true),
+      onClick: () => setIsAlternanceOpen(true),
       annee: "2iem année",
     },
   ];
