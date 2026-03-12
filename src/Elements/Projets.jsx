@@ -62,6 +62,14 @@ export default function Modal({
       onClick: () => setIsDroitsOpen(true),
       annee: "1ere année",
     },
+
+    // Application de gestion de base de données avec c#
+      {
+        id: "c#",
+        title: "application des gestion de base de données",
+        onClick: () => setIsDroitsOpen(true),
+        annee: "2iem année",
+      }
   ];
 
   // Filtres par type de projet et par année
