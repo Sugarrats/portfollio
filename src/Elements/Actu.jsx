@@ -95,6 +95,23 @@ export default function Modal({
                 </span>
               </div>
             )}
+
+            
+            {children ?? (
+              <div className="flex flex-col items-center transform transition duration-300 hover:scale-104">
+                <button
+                  type="button"
+                  onClick={() => setIsStagesOpen(true)}
+                  className="p-2 bg-background text-primaire rounded-full transition duration-300 hover:scale-104"
+                  aria-label="Ouvrir les détails de l'alternance"
+                >
+                  <Files size={80} />
+                </button>
+                <span className="mt-2 text-sm font-bold text-center transition duration-300 hover:scale-104 max-w-xs">
+                  alternance à la drafpica de toulouse
+                </span>
+              </div>
+            )}
           </section>
         </div>
       </Draggable>

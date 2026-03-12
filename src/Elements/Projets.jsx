@@ -64,6 +64,14 @@ export default function Modal({
       annee: "1ere année",
     },
 
+    // stage 1er année 
+    {
+      tags: ["visual basic", "stage"],
+      title: "développement d'une application web de gestion interne",
+      onClick: () => setIsStagesOpen(true),
+      annee: "1er année",
+    },
+
     // Application de gestion de base de données avec c#
     {
       tags: ["c#"],
