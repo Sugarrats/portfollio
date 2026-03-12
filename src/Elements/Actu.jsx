@@ -10,7 +10,7 @@ export default function Modal({
   onClose,
   title = "actualités",
   setIsStagesOpen,
-  setIsAlernanceOpen,
+  setIsAlternanceOpen,
   children,
 }) {
   const nodeRef = useRef(null);
@@ -102,7 +102,7 @@ export default function Modal({
               <div className="flex flex-col items-center transform transition duration-300 hover:scale-104">
                 <button
                   type="button"
-                  onClick={() => setIsAlernanceOpen(true)}
+                  onClick={() => setIsAlternanceOpen(true)}
                   className="p-2 bg-background text-primaire rounded-full transition duration-300 hover:scale-104"
                   aria-label="Ouvrir les détails de l'alternance"
                 >

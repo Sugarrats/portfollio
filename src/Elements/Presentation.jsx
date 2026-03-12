@@ -11,6 +11,7 @@ import LienModal from "./Lien";
 import ActuModal from "./Actu"
 import ContactModal from "./Contact";
 import StageModal from './Stages';
+import AlternanceModal from './Alternance';
 import WebBarModal from './Bar';
 import ParcModal from './Parc';
 import VeillModal from './Veille';
@@ -31,6 +32,7 @@ export const Presentation = () => {
     const [isLienOpen, setIsLienOpen] = useState(false);
     const [isActuOpen, setIsActuOpen] = useState(false);
     const [isStagesOpen, setIsStagesOpen] = useState(false);
+    const [isAlternanceOpen, setIsAlternanceOpen] = useState(false); // new alternance state
     const [isContactOpen, setIsContactOpen] = useState(false);
 
     return (
@@ -176,6 +178,7 @@ export const Presentation = () => {
                 setIsVeilleOpen={setIsVeilleOpen}
                 setIsDroitsOpen={setIsDroitsOpen}
                 setIsStagesOpen={setIsStagesOpen} // forward stage setter
+                setIsAlternanceOpen={setIsAlternanceOpen} // forward alternance setter
             />
 
             <WebBarModal
@@ -211,12 +214,18 @@ export const Presentation = () => {
             <ActuModal
                 isOpen={isActuOpen}
                 onClose={() => setIsActuOpen(false)}
-                setIsStagesOpen={setIsStagesOpen} 
+                setIsStagesOpen={setIsStagesOpen}
+                setIsAlternanceOpen={setIsAlternanceOpen}
             />
 
             <StageModal
                 isOpen={isStagesOpen}
                 onClose={() => setIsStagesOpen(false)}
+            />
+
+            <AlternanceModal
+                isOpen={isAlternanceOpen}
+                onClose={() => setIsAlternanceOpen(false)}
             />
 
             <ContactModal

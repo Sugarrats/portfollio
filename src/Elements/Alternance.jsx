@@ -88,7 +88,7 @@ export default function AlternanceModal({ isOpen, onClose, title = "alternance d
           {/* Body scrollable */}
           <section className="p-4 overflow-y-auto flex-1 flex justify-center space-x-8">
             {children ??
-              LiensStage.map((item) =>
+              LiensAlternance.map((item) =>
                 item.name === "rapport de stage" ? (
                   <button
                     key={item.name}
