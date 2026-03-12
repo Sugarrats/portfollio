@@ -70,6 +70,22 @@ export default function Modal({
         onClick: () => setIsDroitsOpen(true),
         annee: "2iem année",
       }
+
+      // application mobile avec android studio
+      {
+        id: "developpement mobile, java, base de donnée embarquées",
+        title: "développement d'une application mobile avec bd embarquée",
+        onClick: () => setIsDroitsOpen(true),
+        annee: "2iem année",
+      }
+
+      // projet alternance
+      {
+        id: "c#, web, alternance, api",
+        title: "développement d'une application web de gestion interne",
+        onClick: () => setIsDroitsOpen(true),
+        annee: "2iem année",
+      }
   ];
 
   // Filtres par type de projet et par année
