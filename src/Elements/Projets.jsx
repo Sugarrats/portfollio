@@ -20,12 +20,13 @@ export default function Modal({
   const [isMobile, setIsMobile] = useState(false);
   const [activeFilters, setActiveFilters] = useState([]); // multiple filters
 
-  // ajouter touts les nouveau projets ici
+  // ajouter touts les nouveaux projets ici
+  // chaque projet est identifié avec un ou plusieurs tags
   const projects = [
 
     // bar a theme
     {
-      id: "web",
+      tags: ["web"],
       title: "site d'un bar",
       onClick: () => setIsWebBarOpen(true),
       annee: "1ere année",
@@ -33,7 +34,7 @@ export default function Modal({
 
     // parc informatique
     {
-      id: "parc",
+      tags: ["parc"],
       title: "gestion de parc",
       onClick: () => setIsParcOpen(true),
       annee: "1ere année",
@@ -41,7 +42,7 @@ export default function Modal({
 
     // veille
     {
-      id: "veille",
+      tags: ["veille"],
       title: "veille informatique",
       onClick: () => setIsVeilleOpen(true),
       annee: "1ere année",
@@ -49,7 +50,7 @@ export default function Modal({
 
     // presta
     {
-      id: "web",
+      tags: ["web"],
       title: "boutique prestashop",
       onClick: () => setIsPrestaOpen(true),
       annee: "1ere année",
@@ -57,41 +58,45 @@ export default function Modal({
 
     // droits linux
     {
-      id: "parc",
+      tags: ["parc"],
       title: "gestion de droits sur linux",
       onClick: () => setIsDroitsOpen(true),
       annee: "1ere année",
     },
 
     // Application de gestion de base de données avec c#
-      {
-        id: "c#",
-        title: "application des gestion de base de données",
-        onClick: () => setIsDroitsOpen(true),
-        annee: "2iem année",
-      }
+    {
+      tags: ["c#"],
+      title: "application des gestion de base de données",
+      onClick: () => setIsDroitsOpen(true),
+      annee: "2iem année",
+    },
 
-      // application mobile avec android studio
-      {
-        id: "developpement mobile, java, base de donnée embarquées",
-        title: "développement d'une application mobile avec bd embarquée",
-        onClick: () => setIsDroitsOpen(true),
-        annee: "2iem année",
-      }
+    // application mobile avec android studio
+    {
+      tags: [
+        "developpement mobile",
+        "java",
+        "base de donnée embarquées",
+      ],
+      title: "développement d'une application mobile avec bd embarquée",
+      onClick: () => setIsDroitsOpen(true),
+      annee: "2iem année",
+    },
 
-      // projet alternance
-      {
-        id: "c#, web, alternance, api",
-        title: "développement d'une application web de gestion interne",
-        onClick: () => setIsDroitsOpen(true),
-        annee: "2iem année",
-      }
+    // projet alternance
+    {
+      tags: ["c#", "web", "alternance", "api"],
+      title: "développement d'une application web de gestion interne",
+      onClick: () => setIsDroitsOpen(true),
+      annee: "2iem année",
+    },
   ];
 
-  // Filtres par type de projet et par année
+  // Filtres par type de projet (tags) et par année
   const filters = [
     "all",
-    ...new Set(projects.flatMap((p) => [p.id, p.annee])),
+    ...new Set(projects.flatMap((p) => [...p.tags, p.annee])),
   ];
 
   useEffect(() => {
@@ -228,15 +233,15 @@ export default function Modal({
                     const matchYear =
                       selectedYears.length === 0 || selectedYears.includes(project.annee);
                     const matchType =
-                      selectedTypes.length === 0 || selectedTypes.includes(project.id);
+                      selectedTypes.length === 0 || selectedTypes.some((t) => project.tags.includes(t));
 
                     return matchYear && matchType;
                   })
                   .map((project, index) => (
                     <div
-                      key={`${project.id}-${index}`}
+                      key={`${project.tags.join(',')}-${index}`}
                       className="flex flex-col items-center"
-                      data-project-id={project.id}
+                      data-project-id={project.tags.join(',')}
                     >
                       <button
                         type="button"
