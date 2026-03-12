@@ -175,6 +175,7 @@ export const Presentation = () => {
                 setIsParcOpen={setIsParcOpen}
                 setIsVeilleOpen={setIsVeilleOpen}
                 setIsDroitsOpen={setIsDroitsOpen}
+                setIsStagesOpen={setIsStagesOpen} // forward stage setter
             />
 
             <WebBarModal

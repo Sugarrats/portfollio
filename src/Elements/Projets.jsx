@@ -14,6 +14,7 @@ export default function Modal({
   setIsVeilleOpen,
   setIsPrestaOpen,
   setIsDroitsOpen,
+  setIsStagesOpen, // <-- new prop to handle stage projects
   children,
 }) {
   const nodeRef = useRef(null);
@@ -69,7 +70,7 @@ export default function Modal({
       tags: ["visual basic", "stage"],
       title: "développement d'une application web de gestion interne",
       onClick: () => setIsStagesOpen(true),
-      annee: "1er année",
+      annee: "1ere année",
     },
 
     // Application de gestion de base de données avec c#
