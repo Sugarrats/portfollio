@@ -15,11 +15,11 @@ export default function AlternanceModal({ isOpen, onClose, title = "alternance d
   const LiensAlternance = [
     {
       name: "github du projet",
-      href: "https://github.com/Sugarrats/StageIMFT",
+      href: "https://github.com/Sugarrats/portfollio",
     },
     {
-      name: "rapport de stage",
-      href: "/Rapport_de_stage.pdf",
+      name: "rapport d'alternance",
+      href: "/Rapport_Alternance.pdf",
     },
   ];
 
