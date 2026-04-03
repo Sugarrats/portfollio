@@ -15,6 +15,7 @@ export default function Modal({
   setIsPrestaOpen,
   setIsDroitsOpen,
   setIsStagesOpen, 
+  setIsApiOpen,
   setIsAlternanceOpen,
   children,
 }) {
@@ -91,6 +92,19 @@ export default function Modal({
       ],
       title: "développement d'une application mobile avec bd embarquée",
       onClick: () => setIsDroitsOpen(true),
+      annee: "2iem année",
+    },
+
+    // application php utilisant des api avec la méthode agile
+    {
+      tags: [
+        "developpement application",
+        "php",
+        "méthode de travail agile",
+        "API"
+      ],
+      title: "développement d'une application php utilisant des API.",
+      onClick: () => setIsApiOpen(true),
       annee: "2iem année",
     },
 
