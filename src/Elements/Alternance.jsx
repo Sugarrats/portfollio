@@ -15,7 +15,7 @@ export default function AlternanceModal({ isOpen, onClose, title = "alternance d
   const LiensAlternance = [
     {
       name: "github du projet",
-      href: "https://github.com/Sugarrats/portfollio",
+      href: "https://github.com/Sugarrats/mutuaform",
     },
     {
       name: "rapport d'alternance",
@@ -89,7 +89,7 @@ export default function AlternanceModal({ isOpen, onClose, title = "alternance d
           <section className="p-4 overflow-y-auto flex-1 flex justify-center space-x-8">
             {children ??
               LiensAlternance.map((item) =>
-                item.name === "rapport de stage" ? (
+                item.name === "rapport d'alternance" ? (
                   <button
                     key={item.name}
                     onClick={() => window.open(item.href, "_blank")}

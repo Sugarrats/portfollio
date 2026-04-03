@@ -15,8 +15,9 @@ import AlternanceModal from './Alternance';
 import WebBarModal from './Bar';
 import ParcModal from './Parc';
 import VeillModal from './Veille';
-import PrestaModal from './Presta'
-import DroitsModal from './Droits'
+import PrestaModal from './Presta';
+import DroitsModal from './Droits';
+import ApiModal from './PhpApi';
 
 export const Presentation = () => {
 
@@ -34,6 +35,7 @@ export const Presentation = () => {
     const [isStagesOpen, setIsStagesOpen] = useState(false);
     const [isAlternanceOpen, setIsAlternanceOpen] = useState(false); // new alternance state
     const [isContactOpen, setIsContactOpen] = useState(false);
+    const [isApiOpen, setIsApiOpen] = useState (false);
 
     return (
         <section className="relative min-h-screen flex flex-col items-center justify-center w-full px-0 mx-0">
@@ -179,6 +181,7 @@ export const Presentation = () => {
                 setIsDroitsOpen={setIsDroitsOpen}
                 setIsStagesOpen={setIsStagesOpen} // forward stage setter
                 setIsAlternanceOpen={setIsAlternanceOpen} // forward alternance setter
+                setIsApiOpen={setIsApiOpen}
             />
 
             <WebBarModal
@@ -231,6 +234,11 @@ export const Presentation = () => {
             <ContactModal
                 isOpen={isContactOpen}
                 onClose={() => setIsContactOpen(false)}
+            />
+
+            <ApiModal
+                isOpen={isApiOpen}
+                onClose={() => setIsApiOpen(false)}
             />
 
         </section>

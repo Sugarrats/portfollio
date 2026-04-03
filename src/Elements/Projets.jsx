@@ -70,7 +70,7 @@ export default function Modal({
     // stage 1er année 
     {
       tags: ["visual basic", "stage"],
-      title: "développement d'une application web de gestion interne",
+      title: "application web de gestion interne",
       onClick: () => setIsStagesOpen(true),
       annee: "1ere année",
     },
@@ -78,7 +78,7 @@ export default function Modal({
     // Application de gestion de base de données avec c#
     {
       tags: ["c#"],
-      title: "application des gestion de base de données",
+      title: "application de gestion de base de données",
       onClick: () => setIsDroitsOpen(true),
       annee: "2iem année",
     },
@@ -90,7 +90,7 @@ export default function Modal({
         "java",
         "base de donnée embarquées",
       ],
-      title: "développement d'une application mobile avec bd embarquée",
+      title: "application mobile avec bd embarquée",
       onClick: () => setIsDroitsOpen(true),
       annee: "2iem année",
     },
@@ -101,9 +101,9 @@ export default function Modal({
         "developpement application",
         "php",
         "méthode de travail agile",
-        "API"
+        "api"
       ],
-      title: "développement d'une application php utilisant des API.",
+      title: "application php utilisant des api.",
       onClick: () => setIsApiOpen(true),
       annee: "2iem année",
     },

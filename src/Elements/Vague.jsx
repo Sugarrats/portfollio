@@ -32,10 +32,10 @@ export const Vague = () => {
         paused={false}
         style={{ display: 'flex' }}
         options={{
-          height: 15,
-          amplitude: 40,
-          speed: 1,
-          points: 7
+          height: 10,
+          amplitude: 20,
+          speed: 0.5,
+          points: 3
         }}
       />
     </div>

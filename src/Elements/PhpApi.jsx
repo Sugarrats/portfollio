@@ -90,7 +90,7 @@ export default function PhpApi({ isOpen, onClose, title = "application php utili
           <section className="p-4 overflow-y-auto flex-1 flex justify-center space-x-8">
             {children ??
               LiensApi.map((item) =>
-                item.name === "rapport de stage" ? (
+                item.name === "compte rendu" ? (
                   <button
                     key={item.name}
                     onClick={() => window.open(item.href, "_blank")}
