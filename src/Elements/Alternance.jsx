@@ -21,14 +21,6 @@ export default function AlternanceModal({ isOpen, onClose, title = "alternance d
       name: "rapport d'alternance",
       href: "/Rapport_Alternance.pdf",
     },
-    {
-      name: "MCD alternance",
-      href: "/MCD_alternance.png",
-    },
-    {
-      name: "MLD Mutuaform",
-      href: "/MLD_Mutuaform.txt",
-    },
   ];
 
   useEffect(() => {
@@ -97,19 +89,7 @@ export default function AlternanceModal({ isOpen, onClose, title = "alternance d
           <section className="p-4 overflow-y-auto flex-1 flex justify-center space-x-8">
             {children ??
               LiensAlternance.map((item) =>
-                item.name === "github du projet" ? (
-                  
-                    key={item.name}
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center text-center hover:text-secondaire transform transition duration-300 hover:scale-110"
-                    aria-label={`Visiter ${item.name}`}
-                  >
-                    <Github size={40} />
-                    <span className="mt-2 text-sm font-bold ">{item.name}</span>
-                  </a>
-                ) : (
+                item.name === "rapport d'alternance" ? (
                   <button
                     key={item.name}
                     onClick={() => window.open(item.href, "_blank")}
@@ -119,6 +99,18 @@ export default function AlternanceModal({ isOpen, onClose, title = "alternance d
                     <FileUser size={40} />
                     <span className="mt-2 text-sm font-bold ">{item.name}</span>
                   </button>
+                ) : (
+                    <a
+                    key={item.name}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center text-center hover:text-secondaire transform transition duration-300 hover:scale-110"
+                    aria-label={`Visiter ${item.name}`}
+                    >
+                    {item.name === "github du projet" && <Github size={40} />}
+                    <span className="mt-2 text-sm font-bold ">{item.name}</span>
+                    </a>
                 )
               )}
           </section>
