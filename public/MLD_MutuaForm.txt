@@ -1,0 +1,902 @@
+MODÈLE LOGIQUE DE DONNÉES (MLD) - APPLICATION MUTUAFORM
+================================================================
+
+LISTE DES TABLES DE LA BASE DE DONNÉES
+---------------------------------------
+
+1. Tables principales (Entités)
+   - Origine
+   - Site
+   - Salle
+   - Seance
+   - Personnel
+   - Formateurs
+   - FormateurGlobal
+   - RH
+   - ResponsableGlobal
+   - Utilisateur
+   - PasswordResetToken
+   - ActionMutualisee
+   - AppSettings
+   - PagePermissions
+   - __EFMigrationsHistory
+
+2. Tables de liaison (Relations N-N)
+   - SalleSeance
+   - SeanceFormateurs
+   - ResponsableFormateur
+
+
+================================================================
+STRUCTURE DÉTAILLÉE DES TABLES
+================================================================
+
+------------------------------------------------------------------------
+Table: Origine
+------------------------------------------------------------------------
+Description: Représente une entité de formation (GRETA) avec ses 
+             paramètres de connexion à l'API YParéo
+------------------------------------------------------------------------
+Champ                      Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+idOrigine                  integer              NO     PRI      NULL            auto_increment
+nomOrigine                 text                 NO              NULL            
+jetonAuthentification      text                 NO              NULL            
+urlApi                     text                 NO              NULL            
+codeMatierePartage         integer              YES             NULL            
+------------------------------------------------------------------------
+Index:
+  - PRIMARY KEY sur idOrigine
+  
+Commentaires:
+  - jetonAuthentification : Token d'authentification pour l'API YParéo
+  - urlApi : URL de base de l'API YParéo pour cette entité
+  - codeMatierePartage : Code de la matière utilisée pour les actions de partage
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Table: Site
+------------------------------------------------------------------------
+Description: Représente un site physique d'une entité de formation
+------------------------------------------------------------------------
+Champ                      Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+codeSite                   integer              NO     PRI      NULL            
+idOrigineSite              integer              NO     PRI,FK   NULL            → Origine.idOrigine
+etenduSite                 varchar(255)         YES             NULL            
+------------------------------------------------------------------------
+Clés primaires: (codeSite, idOrigineSite)
+Clés étrangères:
+  - FK_Site_Origine_idOrigineSite → Origine(idOrigine) ON DELETE CASCADE
+Index:
+  - IX_Site_idOrigineSite sur idOrigineSite
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Table: Salle
+------------------------------------------------------------------------
+Description: Représente une salle de cours dans un site
+------------------------------------------------------------------------
+Champ                      Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+codeSalle                  integer              NO     PRI      NULL            
+idOrigineSalle             integer              NO     PRI,FK   NULL            → Origine.idOrigine
+nomSalle                   text                 NO              NULL            
+codeSite                   integer              NO     FK       NULL            → Site.codeSite
+idOrigineSite              integer              NO     FK       NULL            → Site.idOrigineSite
+------------------------------------------------------------------------
+Clés primaires: (codeSalle, idOrigineSalle)
+Clés étrangères:
+  - FK_Salle_Origine_idOrigineSalle → Origine(idOrigine) ON DELETE CASCADE
+  - FK_Salle_Site_codeSite_idOrigineSite → Site(codeSite, idOrigineSite) ON DELETE RESTRICT
+Index:
+  - IX_Salle_idOrigineSalle sur idOrigineSalle
+  - IX_Salle_codeSite_idOrigineSite sur (codeSite, idOrigineSite)
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Table: Seance
+------------------------------------------------------------------------
+Description: Représente une séance de cours avec son état de mutualisation
+------------------------------------------------------------------------
+Champ                         Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+codeSeance                    integer              NO     PRI      NULL            
+idOrigine                     integer              NO     PRI,FK   NULL            → Origine.idOrigine
+codeMatiere                   integer              YES             NULL            
+codeTypeCours                 integer              YES             NULL            
+dateSeance                    text                 YES             NULL            
+heureDebut                    text                 YES             NULL            
+heureFin                      text                 YES             NULL            
+etatSeance                    text                 YES             NULL            
+estMutualisee                 integer              NO              NULL            
+alerteChevauchementEnvoyee    boolean              NO              NULL            
+dateDerniereAlerte            timestamp            YES             NULL            
+------------------------------------------------------------------------
+Clés primaires: (codeSeance, idOrigine)
+Clés étrangères:
+  - FK_Seance_Origine_idOrigine → Origine(idOrigine) ON DELETE CASCADE
+Index:
+  - IX_Seance_idOrigine sur idOrigine
+
+Valeurs possibles pour estMutualisee:
+  - 0 : Pas encore traitée (en attente de traitement)
+  - 1 : Mutualisée automatiquement (aucun conflit détecté)
+  - 2 : En attente de confirmation manuelle (conflit détecté)
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Table: Personnel
+------------------------------------------------------------------------
+Description: Représente un personnel (formateur, conseiller, administratif)
+             d'une entité de formation
+------------------------------------------------------------------------
+Champ                      Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+codePersonnel              integer              NO     PRI      NULL            
+idOrigine                  integer              NO     PRI,FK   NULL            → Origine.idOrigine
+nom                        text                 YES             NULL            
+prenom                     text                 YES             NULL            
+login                      text                 YES             NULL            
+dateNaissance              timestamp            YES             NULL            
+isConseiller               integer              NO              0               
+isAdministratif            integer              NO              0               
+isFormateur                integer              NO              0               
+nomFonction                text                 YES             NULL            
+isPermanent                integer              NO              0               
+plusUtilise                integer              NO              0               
+adresseEmail               varchar(255)         YES             NULL            
+telephone                  varchar(20)          YES             NULL            
+telephone2                 varchar(20)          YES             NULL            
+alerteDoublon              integer              NO              NULL            
+------------------------------------------------------------------------
+Clés primaires: (codePersonnel, idOrigine)
+Clés étrangères:
+  - FK_Personnel_Origine_idOrigine → Origine(idOrigine) ON DELETE CASCADE
+Index:
+  - IX_Personnel_idOrigine sur idOrigine
+
+Commentaires:
+  - isConseiller, isAdministratif, isFormateur : Booléens (0/1) pour les rôles
+  - isPermanent : Indique si le personnel est permanent (1) ou vacataire (0)
+  - alerteDoublon : Indique si une alerte de doublon a été détectée
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Table: FormateurGlobal
+------------------------------------------------------------------------
+Description: Représente un formateur unique qui peut intervenir sur 
+             plusieurs entités de formation (GRETA)
+------------------------------------------------------------------------
+Champ                      Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+idFormateurGlobal          integer              NO     PRI      NULL            auto_increment
+nom                        text                 NO              NULL            
+prenom                     text                 NO              NULL            
+dateNaissance              timestamp            YES             NULL            
+adresseEmail               varchar(255)         YES             NULL            
+telephone portable         varchar(20)          YES             NULL            
+telephone fixe             varchar(20)          YES             NULL            
+------------------------------------------------------------------------
+Index:
+  - PRIMARY KEY sur idFormateurGlobal
+
+Commentaires:
+  - Cette table permet de regrouper tous les comptes Personnel d'un même 
+    formateur qui intervient sur plusieurs entités (mutualisation)
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Table: Formateurs
+------------------------------------------------------------------------
+Description: Table de liaison entre FormateurGlobal et Personnel
+             Permet d'associer un formateur global à ses différents 
+             comptes Personnel sur chaque entité
+------------------------------------------------------------------------
+Champ                      Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+idFormateur                integer              NO     PRI      NULL            auto_increment
+idFormateurGlobal          integer              NO     FK       NULL            → FormateurGlobal.idFormateurGlobal
+codePersonnel              integer              NO     FK       NULL            → Personnel.codePersonnel
+idOrigine                  integer              NO     FK       NULL            → Personnel.idOrigine
+------------------------------------------------------------------------
+Index:
+  - PRIMARY KEY sur idFormateur
+  - IX_Formateurs_idFormateurGlobal sur idFormateurGlobal
+  - IX_Formateurs_codePersonnel_idOrigine sur (codePersonnel, idOrigine)
+
+Clés étrangères:
+  - FK_Formateurs_FormateurGlobal_idFormateurGlobal → FormateurGlobal(idFormateurGlobal) ON DELETE RESTRICT
+  - FK_Formateurs_Personnel_codePersonnel_idOrigine → Personnel(codePersonnel, idOrigine) ON DELETE CASCADE
+
+Commentaires:
+  - Un FormateurGlobal peut avoir plusieurs entrées Formateurs (une par entité)
+  - Chaque entrée Formateurs pointe vers un Personnel spécifique d'une entité
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Table: Utilisateur
+------------------------------------------------------------------------
+Description: Représente un compte utilisateur de l'application MutuaForm
+------------------------------------------------------------------------
+Champ                      Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+IdUtilisateur              integer              NO     PRI      NULL            auto_increment
+Login                      varchar(50)          NO              NULL            
+PasswordHash               varchar(255)         NO              NULL            
+Email                      varchar(255)         YES             NULL            
+Role                       varchar(20)          NO              NULL            
+------------------------------------------------------------------------
+Index:
+  - PRIMARY KEY sur IdUtilisateur
+
+Valeurs possibles pour Role:
+  - "Admin" : Administrateur système
+  - "RH" : Responsable RH
+  - "Responsable" : Responsable de formateur
+
+Commentaires:
+  - PasswordHash stocke le hash du mot de passe (jamais en clair)
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Table: RH
+------------------------------------------------------------------------
+Description: Représente un responsable RH avec son compte utilisateur
+------------------------------------------------------------------------
+Champ                      Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+IdRH                       integer              NO     PRI      NULL            auto_increment
+Nom                        varchar(100)         NO              NULL            
+Prenom                     varchar(100)         NO              NULL            
+CodePersonnel              integer              YES    FK       NULL            → Personnel.codePersonnel
+IdOriginePersonnel         integer              YES    FK       NULL            → Personnel.idOrigine
+DateNaissance              date                 YES             NULL            
+adresseEmail               varchar(255)         YES             NULL            
+telephone fixe             varchar(20)          YES             NULL            
+telephone portable         varchar(20)          YES             NULL            
+IdUtilisateur              integer              YES    FK       NULL            → Utilisateur.IdUtilisateur
+------------------------------------------------------------------------
+Index:
+  - PRIMARY KEY sur IdRH
+  - IX_RH_CodePersonnel_IdOriginePersonnel sur (CodePersonnel, IdOriginePersonnel)
+  - IX_RH_IdUtilisateur sur IdUtilisateur
+
+Clés étrangères:
+  - FK_RH_Personnel_CodePersonnel_IdOriginePersonnel → Personnel(codePersonnel, idOrigine) ON DELETE RESTRICT
+  - FK_RH_Utilisateur_IdUtilisateur → Utilisateur(IdUtilisateur) ON DELETE SET NULL
+
+Commentaires:
+  - Un RH peut être lié à un Personnel (s'il existe dans YParéo)
+  - Un RH a obligatoirement un compte Utilisateur pour se connecter
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Table: ResponsableGlobal
+------------------------------------------------------------------------
+Description: Représente un responsable de formateurs avec son compte utilisateur
+------------------------------------------------------------------------
+Champ                      Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+IdResponsableGlobal        integer              NO     PRI      NULL            auto_increment
+Nom                        varchar(100)         NO              NULL            
+Prenom                     varchar(100)         NO              NULL            
+CodePersonnel              integer              YES    FK       NULL            → Personnel.codePersonnel
+IdOriginePersonnel         integer              YES    FK       NULL            → Personnel.idOrigine
+DateNaissance              date                 YES             NULL            
+adresseEmail               varchar(255)         YES             NULL            
+telephone fixe             varchar(20)          YES             NULL            
+telephone portable         varchar(20)          YES             NULL            
+IdUtilisateur              integer              YES    FK       NULL            → Utilisateur.IdUtilisateur
+------------------------------------------------------------------------
+Index:
+  - PRIMARY KEY sur IdResponsableGlobal
+  - IX_ResponsableGlobal_CodePersonnel_IdOriginePersonnel sur (CodePersonnel, IdOriginePersonnel)
+  - IX_ResponsableGlobal_IdUtilisateur sur IdUtilisateur
+
+Clés étrangères:
+  - FK_ResponsableGlobal_Personnel_CodePersonnel_IdOriginePersonnel → Personnel(codePersonnel, idOrigine) ON DELETE RESTRICT
+  - FK_ResponsableGlobal_Utilisateur_IdUtilisateur → Utilisateur(IdUtilisateur) ON DELETE RESTRICT
+
+Commentaires:
+  - Un ResponsableGlobal peut être lié à un Personnel (s'il existe dans YParéo)
+  - Un ResponsableGlobal a obligatoirement un compte Utilisateur
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Table: PasswordResetToken
+------------------------------------------------------------------------
+Description: Stocke les tokens de réinitialisation de mot de passe
+------------------------------------------------------------------------
+Champ                      Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+Id                         integer              NO     PRI      NULL            auto_increment
+UtilisateurId              integer              NO     FK       NULL            → Utilisateur.IdUtilisateur
+Token                      text                 NO              NULL            
+Expiration                 timestamp            NO              NULL            
+------------------------------------------------------------------------
+Index:
+  - PRIMARY KEY sur Id
+  - IX_PasswordResetToken_UtilisateurId sur UtilisateurId
+
+Clés étrangères:
+  - FK_PasswordResetToken_Utilisateur_UtilisateurId → Utilisateur(IdUtilisateur) ON DELETE CASCADE
+
+Commentaires:
+  - Le token expire après la date Expiration
+  - Les tokens expirés doivent être nettoyés régulièrement
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Table: ActionMutualisee
+------------------------------------------------------------------------
+Description: Représente une action de mutualisation créée dans YParéo
+             pour bloquer un créneau horaire sur une entité cible
+------------------------------------------------------------------------
+Champ                      Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+idActionMutualisee         integer              NO     PRI      NULL            auto_increment
+codeSeanceSource           integer              NO     FK       NULL            → Seance.codeSeance
+idOrigineSource            integer              NO     FK       NULL            → Seance.idOrigine
+idOrigineCible             integer              NO              NULL            
+codeSeanceYpareo           integer              NO              NULL            
+dateCreation               timestamp            NO              NULL            
+dateSeanceOriginale        text                 NO              '01/01/2000'    
+heureDebutOriginale        text                 NO              '00:00'         
+heureFinOriginale          text                 NO              '00:00'         
+estObsolete                integer              NO              0               
+dateObsolescence           text                 YES             NULL            
+raisonObsolescence         text                 YES             NULL            
+codeActionRemplacante      integer              YES             NULL            
+codeActionObsolete         integer              YES             NULL            
+------------------------------------------------------------------------
+Index:
+  - PRIMARY KEY sur idActionMutualisee
+  - IX_ActionMutualisee_codeSeanceSource_idOrigineSource sur (codeSeanceSource, idOrigineSource)
+
+Clés étrangères:
+  - FK_ActionMutualisee_Seance_codeSeanceSource_idOrigineSource → Seance(codeSeance, idOrigine) ON DELETE CASCADE
+
+Commentaires:
+  - codeSeanceYpareo : ID de l'action créée dans YParéo
+  - estObsolete : 0 = active, 1 = obsolète (action remplacée ou séance modifiée)
+  - codeActionRemplacante : ID de l'action qui remplace celle-ci (si obsolète)
+  - codeActionObsolete : ID de l'ancienne action que celle-ci remplace
+  - dateSeanceOriginale, heureDebutOriginale, heureFinOriginale : 
+    Stockent les horaires au moment de la création pour détecter les modifications
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Table: AppSettings
+------------------------------------------------------------------------
+Description: Stocke les paramètres de configuration de l'application
+------------------------------------------------------------------------
+Champ                      Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+Id                         integer              NO     PRI      NULL            auto_increment
+Cle                        text                 NO              NULL            
+Valeur                     varchar(500)         NO              NULL            
+Description                varchar(500)         YES             NULL            
+DateModification           timestamp            YES             now()           
+------------------------------------------------------------------------
+Index:
+  - PRIMARY KEY sur Id
+
+Exemples de paramètres:
+  - "TokenExpirationMinutes" : Durée de validité des tokens de reset
+  - "JobQuartzCronExpression" : Expression CRON pour la planification des jobs
+  - "AlertEmailEnabled" : Active/désactive les emails d'alerte
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Table: PagePermissions
+------------------------------------------------------------------------
+Description: Définit les permissions d'accès aux pages par rôle
+------------------------------------------------------------------------
+Champ                      Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+Id                         integer              NO     PRI      NULL            auto_increment
+NomPage                    text                 NO              NULL            
+Role                       text                 NO              NULL            
+AAcces                     boolean              NO              NULL            
+------------------------------------------------------------------------
+Index:
+  - PRIMARY KEY sur Id
+
+Exemples de données:
+  - NomPage: "/GestionFormateurs", Role: "Admin", AAcces: true
+  - NomPage: "/GestionFormateurs", Role: "Responsable", AAcces: false
+  - NomPage: "/TableauBord", Role: "RH", AAcces: true
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Table: __EFMigrationsHistory
+------------------------------------------------------------------------
+Description: Table système d'Entity Framework Core pour suivre les migrations
+------------------------------------------------------------------------
+Champ                      Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+MigrationId                varchar(150)         NO     PRI      NULL            
+ProductVersion             varchar(32)          NO              NULL            
+------------------------------------------------------------------------
+Index:
+  - PRIMARY KEY sur MigrationId
+
+Commentaires:
+  - Table générée automatiquement par Entity Framework Core
+  - NE PAS MODIFIER MANUELLEMENT
+------------------------------------------------------------------------
+
+
+================================================================
+TABLES DE LIAISON (RELATIONS N-N)
+================================================================
+
+------------------------------------------------------------------------
+Table: SalleSeance
+------------------------------------------------------------------------
+Description: Association entre Seance et Salle (une séance peut avoir 
+             plusieurs salles, une salle peut accueillir plusieurs séances)
+------------------------------------------------------------------------
+Champ                      Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+codeSeance                 integer              NO     PRI,FK   NULL            → Seance.codeSeance
+idOrigineSeance            integer              NO     PRI,FK   NULL            → Seance.idOrigine
+codeSalle                  integer              NO     PRI,FK   NULL            → Salle.codeSalle
+idOrigineSalle             integer              NO     PRI,FK   NULL            → Salle.idOrigineSalle
+------------------------------------------------------------------------
+Clés primaires: (codeSeance, idOrigineSeance, codeSalle, idOrigineSalle)
+
+Clés étrangères:
+  - FK_SalleSeance_Seance_codeSeance_idOrigineSeance → Seance(codeSeance, idOrigine) ON DELETE CASCADE
+  - FK_SalleSeance_Salle_codeSalle_idOrigineSalle → Salle(codeSalle, idOrigineSalle) ON DELETE CASCADE
+
+Index:
+  - IX_SalleSeance_codeSalle_idOrigineSalle sur (codeSalle, idOrigineSalle)
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Table: SeanceFormateurs
+------------------------------------------------------------------------
+Description: Association entre Seance et Formateurs (une séance peut avoir 
+             plusieurs formateurs, un formateur peut avoir plusieurs séances)
+------------------------------------------------------------------------
+Champ                      Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+idFormateur                integer              NO     PRI,FK   NULL            → Formateurs.idFormateur
+codeSeance                 integer              NO     PRI,FK   NULL            → Seance.codeSeance
+idOrigineSeance            integer              NO     PRI,FK   NULL            → Seance.idOrigine
+------------------------------------------------------------------------
+Clés primaires: (idFormateur, codeSeance, idOrigineSeance)
+
+Clés étrangères:
+  - FK_SeanceFormateurs_Formateurs_idFormateur → Formateurs(idFormateur) ON DELETE CASCADE
+  - FK_SeanceFormateurs_Seance_codeSeance_idOrigineSeance → Seance(codeSeance, idOrigine) ON DELETE CASCADE
+
+Index:
+  - IX_SeanceFormateurs_codeSeance_idOrigineSeance sur (codeSeance, idOrigineSeance)
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Table: ResponsableFormateur
+------------------------------------------------------------------------
+Description: Association entre ResponsableGlobal et Personnel (formateurs)
+             Un responsable peut gérer plusieurs formateurs
+------------------------------------------------------------------------
+Champ                      Type                 Null   Clé      Default         Extra
+------------------------------------------------------------------------
+idResponsableGlobal        integer              NO     PRI,FK   NULL            → ResponsableGlobal.IdResponsableGlobal
+codePersonnel              integer              NO     PRI,FK   NULL            → Personnel.codePersonnel
+idOrigine                  integer              NO     PRI,FK   NULL            → Personnel.idOrigine
+IdResponsableFormateur     integer              NO              NULL            
+------------------------------------------------------------------------
+Clés primaires: (idResponsableGlobal, codePersonnel, idOrigine)
+
+Clés étrangères:
+  - FK_ResponsableFormateur_ResponsableGlobal_idResponsableGlobal → ResponsableGlobal(IdResponsableGlobal) ON DELETE CASCADE
+  - FK_ResponsableFormateur_Personnel_codePersonnel_idOrigine → Personnel(codePersonnel, idOrigine) ON DELETE CASCADE
+
+Index:
+  - IX_ResponsableFormateur_codePersonnel_idOrigine sur (codePersonnel, idOrigine)
+------------------------------------------------------------------------
+
+
+================================================================
+SCHÉMAS RELATIONNELS DÉTAILLÉS
+================================================================
+
+1. Hiérarchie des Origines (Entités de formation)
+   
+   Origine
+      ├── Site (1,n)
+      │      └── Salle (1,n)
+      ├── Personnel (1,n)
+      │      ├── Formateurs (0,n)
+      │      ├── RH (0,1)
+      │      └── ResponsableGlobal (0,1)
+      └── Seance (1,n)
+
+
+2. Relation FormateurGlobal ↔ Personnel (via Formateurs)
+
+   +---------------------------+            +---------------------------+
+   |    FormateurGlobal        |            |       Formateurs          |
+   +---------------------------+            +---------------------------+
+   | idFormateurGlobal (PK)    |<-----------| idFormateur (PK)          |
+   | nom                       |     1,n    | idFormateurGlobal (FK)    |
+   | prenom                    |            | codePersonnel (FK)        |
+   | dateNaissance             |            | idOrigine (FK)            |
+   +---------------------------+            +---------------------------+
+                                                       |
+                                                       | 1,1
+                                                       v
+                                            +---------------------------+
+                                            |       Personnel           |
+                                            +---------------------------+
+                                            | codePersonnel (PK)        |
+                                            | idOrigine (PK,FK)         |
+                                            | nom                       |
+                                            | prenom                    |
+                                            | isFormateur               |
+                                            +---------------------------+
+
+
+3. Relation Seance ↔ Formateurs (via SeanceFormateurs)
+
+   +---------------------------+            +---------------------------+
+   |        Seance             |            |   SeanceFormateurs        |
+   +---------------------------+            +---------------------------+
+   | codeSeance (PK)           |<-----------| idFormateur (PK,FK)       |
+   | idOrigine (PK,FK)         |     n,n    | codeSeance (PK,FK)        |
+   | dateSeance                |            | idOrigineSeance (PK,FK)   |
+   | heureDebut                |            +---------------------------+
+   | heureFin                  |                       |
+   | estMutualisee             |                       | n,n
+   +---------------------------+                       v
+                                            +---------------------------+
+                                            |       Formateurs          |
+                                            +---------------------------+
+                                            | idFormateur (PK)          |
+                                            | idFormateurGlobal (FK)    |
+                                            | codePersonnel (FK)        |
+                                            | idOrigine (FK)            |
+                                            +---------------------------+
+
+
+4. Relation Seance ↔ Salle (via SalleSeance)
+
+   +---------------------------+            +---------------------------+
+   |        Seance             |            |      SalleSeance          |
+   +---------------------------+            +---------------------------+
+   | codeSeance (PK)           |<-----------| codeSeance (PK,FK)        |
+   | idOrigine (PK,FK)         |     n,n    | idOrigineSeance (PK,FK)   |
+   | dateSeance                |            | codeSalle (PK,FK)         |
+   +---------------------------+            | idOrigineSalle (PK,FK)    |
+                                            +---------------------------+
+                                                       |
+                                                       | n,n
+                                                       v
+                                            +---------------------------+
+                                            |         Salle             |
+                                            +---------------------------+
+                                            | codeSalle (PK)            |
+                                            | idOrigineSalle (PK,FK)    |
+                                            | nomSalle                  |
+                                            | codeSite (FK)             |
+                                            +---------------------------+
+
+
+5. Relation ActionMutualisee ↔ Seance
+
+   +---------------------------+
+   |        Seance             |
+   +---------------------------+
+   | codeSeance (PK)           |<-----------+
+   | idOrigine (PK,FK)         |            |
+   | estMutualisee             |            | 1,n
+   +---------------------------+            |
+                                            |
+                                  +---------------------------+
+                                  |    ActionMutualisee       |
+                                  +---------------------------+
+                                  | idActionMutualisee (PK)   |
+                                  | codeSeanceSource (FK)     |
+                                  | idOrigineSource (FK)      |
+                                  | idOrigineCible            |
+                                  | codeSeanceYpareo          |
+                                  | estObsolete               |
+                                  | codeActionRemplacante     |
+                                  | codeActionObsolete        |
+                                  +---------------------------+
+
+
+6. Relation Utilisateur ↔ RH / ResponsableGlobal
+
+                    +---------------------------+
+                    |      Utilisateur          |
+                    +---------------------------+
+                    | IdUtilisateur (PK)        |
+                    | Login                     |
+                    | PasswordHash              |
+                    | Role                      |
+                    +---------------------------+
+                              |
+                +-------------+-------------+
+                |                           |
+                | 0,1                       | 0,1
+                v                           v
+   +---------------------------+    +---------------------------+
+   |          RH               |    |   ResponsableGlobal       |
+   +---------------------------+    +---------------------------+
+   | IdRH (PK)                 |    | IdResponsableGlobal (PK)  |
+   | Nom                       |    | Nom                       |
+   | Prenom                    |    | Prenom                    |
+   | IdUtilisateur (FK)        |    | IdUtilisateur (FK)        |
+   | CodePersonnel (FK)        |    | CodePersonnel (FK)        |
+   | IdOriginePersonnel (FK)   |    | IdOriginePersonnel (FK)   |
+   +---------------------------+    +---------------------------+
+                |                               |
+                | 0,1                           | 0,1
+                v                               v
+              +---------------------------+
+              |       Personnel           |
+              +---------------------------+
+              | codePersonnel (PK)        |
+              | idOrigine (PK,FK)         |
+              +---------------------------+
+
+
+7. Relation ResponsableGlobal ↔ Personnel (via ResponsableFormateur)
+
+   +---------------------------+            +---------------------------+
+   |   ResponsableGlobal       |            |  ResponsableFormateur     |
+   +---------------------------+            +---------------------------+
+   | IdResponsableGlobal (PK)  |<-----------| idResponsableGlobal(PK,FK)|
+   | Nom                       |     1,n    | codePersonnel (PK,FK)     |
+   | Prenom                    |            | idOrigine (PK,FK)         |
+   +---------------------------+            +---------------------------+
+                                                       |
+                                                       | n,n
+                                                       v
+                                            +---------------------------+
+                                            |       Personnel           |
+                                            +---------------------------+
+                                            | codePersonnel (PK)        |
+                                            | idOrigine (PK,FK)         |
+                                            | isFormateur               |
+                                            +---------------------------+
+
+
+================================================================
+CONTRAINTES D'INTÉGRITÉ RÉFÉRENTIELLE - RÉCAPITULATIF
+================================================================
+
+1. Site.idOrigineSite → Origine.idOrigine 
+   ON DELETE CASCADE
+
+2. Salle.idOrigineSalle → Origine.idOrigine 
+   ON DELETE CASCADE
+
+3. Salle.(codeSite, idOrigineSite) → Site.(codeSite, idOrigineSite) 
+   ON DELETE RESTRICT
+
+4. Seance.idOrigine → Origine.idOrigine 
+   ON DELETE CASCADE
+
+5. Personnel.idOrigine → Origine.idOrigine 
+   ON DELETE CASCADE
+
+6. Formateurs.idFormateurGlobal → FormateurGlobal.idFormateurGlobal 
+   ON DELETE RESTRICT
+
+7. Formateurs.(codePersonnel, idOrigine) → Personnel.(codePersonnel, idOrigine) 
+   ON DELETE CASCADE
+
+8. RH.(CodePersonnel, IdOriginePersonnel) → Personnel.(codePersonnel, idOrigine) 
+   ON DELETE RESTRICT
+
+9. RH.IdUtilisateur → Utilisateur.IdUtilisateur 
+   ON DELETE SET NULL
+
+10. ResponsableGlobal.(CodePersonnel, IdOriginePersonnel) → Personnel.(codePersonnel, idOrigine) 
+    ON DELETE RESTRICT
+
+11. ResponsableGlobal.IdUtilisateur → Utilisateur.IdUtilisateur 
+    ON DELETE RESTRICT
+
+12. PasswordResetToken.UtilisateurId → Utilisateur.IdUtilisateur 
+    ON DELETE CASCADE
+
+13. ActionMutualisee.(codeSeanceSource, idOrigineSource) → Seance.(codeSeance, idOrigine) 
+    ON DELETE CASCADE
+
+14. SalleSeance.(codeSeance, idOrigineSeance) → Seance.(codeSeance, idOrigine) 
+    ON DELETE CASCADE
+
+15. SalleSeance.(codeSalle, idOrigineSalle) → Salle.(codeSalle, idOrigineSalle) 
+    ON DELETE CASCADE
+
+16. SeanceFormateurs.idFormateur → Formateurs.idFormateur 
+    ON DELETE CASCADE
+
+17. SeanceFormateurs.(codeSeance, idOrigineSeance) → Seance.(codeSeance, idOrigine) 
+    ON DELETE CASCADE
+
+18. ResponsableFormateur.idResponsableGlobal → ResponsableGlobal.IdResponsableGlobal 
+    ON DELETE CASCADE
+
+19. ResponsableFormateur.(codePersonnel, idOrigine) → Personnel.(codePersonnel, idOrigine) 
+    ON DELETE CASCADE
+
+
+================================================================
+REQUÊTES SQL UTILES POUR L'ANALYSE
+================================================================
+
+-- 1. Lister tous les formateurs mutualisés (intervenant sur >= 2 origines)
+SELECT 
+    fg."idFormateurGlobal",
+    fg.nom,
+    fg.prenom,
+    COUNT(DISTINCT f."idOrigine") as "nombreOrigines"
+FROM "FormateurGlobal" fg
+JOIN "Formateurs" f ON f."idFormateurGlobal" = fg."idFormateurGlobal"
+GROUP BY fg."idFormateurGlobal", fg.nom, fg.prenom
+HAVING COUNT(DISTINCT f."idOrigine") >= 2
+ORDER BY "nombreOrigines" DESC;
+
+
+-- 2. Lister toutes les séances en attente de mutualisation
+SELECT 
+    s."codeSeance",
+    s."idOrigine",
+    o."nomOrigine",
+    s."dateSeance",
+    s."heureDebut",
+    s."heureFin",
+    s."estMutualisee"
+FROM "Seance" s
+JOIN "Origine" o ON o."idOrigine" = s."idOrigine"
+WHERE s."estMutualisee" = 0
+ORDER BY s."dateSeance", s."heureDebut";
+
+
+-- 3. Lister toutes les actions mutualisées actives (non obsolètes)
+SELECT 
+    am."idActionMutualisee",
+    am."codeSeanceSource",
+    os."nomOrigine" as "origineSource",
+    oc."nomOrigine" as "origineCible",
+    am."dateSeanceOriginale",
+    am."heureDebutOriginale",
+    am."heureFinOriginale",
+    am."codeSeanceYpareo"
+FROM "ActionMutualisee" am
+JOIN "Origine" os ON os."idOrigine" = am."idOrigineSource"
+JOIN "Origine" oc ON oc."idOrigine" = am."idOrigineCible"
+WHERE am."estObsolete" = 0
+ORDER BY am."dateSeanceOriginale", am."heureDebutOriginale";
+
+
+-- 4. Lister toutes les actions obsolètes à nettoyer dans YParéo
+SELECT 
+    am."idActionMutualisee",
+    am."codeSeanceYpareo",
+    oc."nomOrigine" as "origineCible",
+    am."dateObsolescence",
+    am."raisonObsolescence",
+    am."codeActionRemplacante"
+FROM "ActionMutualisee" am
+JOIN "Origine" oc ON oc."idOrigine" = am."idOrigineCible"
+WHERE am."estObsolete" = 1
+ORDER BY am."dateObsolescence" DESC;
+
+
+-- 5. Compter le nombre de formateurs par origine
+SELECT 
+    o."nomOrigine",
+    COUNT(DISTINCT f."idFormateur") as "nombreFormateurs",
+    COUNT(DISTINCT f."idFormateurGlobal") as "nombreFormateursGlobaux"
+FROM "Origine" o
+LEFT JOIN "Formateurs" f ON f."idOrigine" = o."idOrigine"
+GROUP BY o."idOrigine", o."nomOrigine"
+ORDER BY "nombreFormateurs" DESC;
+
+
+-- 6. Trouver les conflits horaires potentiels pour un formateur
+SELECT 
+    f."idFormateurGlobal",
+    fg.nom,
+    fg.prenom,
+    s1."dateSeance",
+    s1."heureDebut" as "debut1",
+    s1."heureFin" as "fin1",
+    o1."nomOrigine" as "origine1",
+    s2."heureDebut" as "debut2",
+    s2."heureFin" as "fin2",
+    o2."nomOrigine" as "origine2"
+FROM "Formateurs" f
+JOIN "FormateurGlobal" fg ON fg."idFormateurGlobal" = f."idFormateurGlobal"
+JOIN "SeanceFormateurs" sf1 ON sf1."idFormateur" = f."idFormateur"
+JOIN "Seance" s1 ON s1."codeSeance" = sf1."codeSeance" 
+    AND s1."idOrigine" = sf1."idOrigineSeance"
+JOIN "Origine" o1 ON o1."idOrigine" = s1."idOrigine"
+JOIN "Formateurs" f2 ON f2."idFormateurGlobal" = f."idFormateurGlobal" 
+    AND f2."idFormateur" != f."idFormateur"
+JOIN "SeanceFormateurs" sf2 ON sf2."idFormateur" = f2."idFormateur"
+JOIN "Seance" s2 ON s2."codeSeance" = sf2."codeSeance" 
+    AND s2."idOrigine" = sf2."idOrigineSeance"
+JOIN "Origine" o2 ON o2."idOrigine" = s2."idOrigine"
+WHERE s1."dateSeance" = s2."dateSeance"
+    AND (
+        (s1."heureDebut" <= s2."heureDebut" AND s1."heureFin" > s2."heureDebut")
+        OR (s2."heureDebut" <= s1."heureDebut" AND s2."heureFin" > s1."heureDebut")
+    )
+ORDER BY f."idFormateurGlobal", s1."dateSeance", s1."heureDebut";
+
+
+-- 7. Statistiques de mutualisation par origine
+SELECT 
+    o."nomOrigine",
+    COUNT(s."codeSeance") as "totalSeances",
+    SUM(CASE WHEN s."estMutualisee" = 0 THEN 1 ELSE 0 END) as "nonTraitees",
+    SUM(CASE WHEN s."estMutualisee" = 1 THEN 1 ELSE 0 END) as "mutualisees",
+    SUM(CASE WHEN s."estMutualisee" = 2 THEN 1 ELSE 0 END) as "enAttente"
+FROM "Origine" o
+LEFT JOIN "Seance" s ON s."idOrigine" = o."idOrigine"
+GROUP BY o."idOrigine", o."nomOrigine"
+ORDER BY "totalSeances" DESC;
+
+
+================================================================
+RÈGLES DE GESTION MÉTIER (RAPPEL)
+================================================================
+
+1. Un formateur est considéré comme "mutualisé" s'il intervient sur au 
+   moins 2 entités formations différentes (2 Origines distinctes).
+
+2. Une Seance peut avoir 3 états de mutualisation (estMutualisee):
+   - 0 : Pas encore traitée (en attente de traitement par le job Quartz)
+   - 1 : Mutualisée automatiquement (aucun conflit horaire détecté)
+   - 2 : En attente de confirmation manuelle (conflit horaire détecté)
+
+3. Une ActionMutualisee devient obsolète (estObsolete = 1) dans les cas suivants:
+   - La séance source a été modifiée (date, heureDebut ou heureFin)
+   - La séance source a été supprimée dans YParéo
+   - Un conflit horaire est détecté après modification
+   - Elle a été remplacée par une nouvelle action (codeActionRemplacante != NULL)
+
+4. Lors de la création d'une ActionMutualisee dans YParéo:
+   - coefficient = -1 (action bloquante, formateur non disponible)
+   - commentaire = "⚠️ NE PAS MODIFIER - Personnel occupé sur [entité] - Géré par MutuaForm"
+   - Si modification: "... (MAJ du JJ/MM/AAAA) - Remplace action #[ancienne]"
+
+5. Les jobs Quartz automatiques:
+   - PartagerToutesLesSeances() : Détecte et mutualise les nouvelles séances
+   - DetecterEtMettreAJourSeancesModifiees() : Détecte les modifications et met à jour
+
+6. Les responsables RH et ResponsableGlobal peuvent être liés à un Personnel
+   s'ils existent également dans YParéo, sinon ces champs restent NULL.
+
+7. Le système utilise des clés composites (codeX, idOrigineX) pour garantir
+   l'unicité des entités par origine, car les codes peuvent se répéter entre
+   différentes entités de formation.
+
+
+================================================================
