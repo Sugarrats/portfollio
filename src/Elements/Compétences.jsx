@@ -128,7 +128,7 @@ export default function ModalCompétences({ isOpen, onClose, title = "compétenc
                   deleteSpeed: Infinity,
                   cursor: "_",
                   html: true,
-                  delay: 10,
+                  delay: 20,
                 }}
               />
             </p>

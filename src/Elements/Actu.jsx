@@ -77,7 +77,7 @@ export default function Modal({
                   loop: false,
                   deleteSpeed: Infinity,
                   cursor: "_",
-                  delay: 10,
+                  delay: 20,
                 }}
               />
             </p>
