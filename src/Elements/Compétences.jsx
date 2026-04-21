@@ -121,13 +121,14 @@ export default function ModalCompétences({ isOpen, onClose, title = "compétenc
               <Typewriter
                 options={{
                   strings: [
-                    "voici une sélection de mes <span class='text-secondaire font-bold'>compétences</span> utiles pour mon projet d'orientation en <span class='text-secondaire font-bold'>licence pro APSIO.</span>",
+                    "voici une sélection de mes <span class='text-secondaire font-bold'>compétences</span>",
                   ],
                   autoStart: true,
                   loop: false,
                   deleteSpeed: Infinity,
                   cursor: "_",
                   html: true,
+                  delay: 10,
                 }}
               />
             </p>

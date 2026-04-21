@@ -238,6 +238,7 @@ export default function Modal({
                   deleteSpeed: Infinity,
                   cursor: "_",
                   html: true,
+                  delay: 10,
                 }}
               />
             </p>

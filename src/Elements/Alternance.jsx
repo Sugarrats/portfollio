@@ -5,7 +5,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import Draggable from "react-draggable";
-import { Github, FileUser } from "lucide-react";
+import { Github, FileUser, BookOpen  } from "lucide-react";
 
 export default function AlternanceModal({ isOpen, onClose, title = "alternance drafpica de toulouse", children }) {
   const nodeRef = useRef(null);
@@ -20,6 +20,10 @@ export default function AlternanceModal({ isOpen, onClose, title = "alternance d
     {
       name: "rapport d'alternance",
       href: "/Rapport_Alternance.pdf",
+    },
+    {
+    name: "documentation",
+    href: "https://mutuaform.vercel.app/",
     },
   ];
 
@@ -100,17 +104,18 @@ export default function AlternanceModal({ isOpen, onClose, title = "alternance d
                     <span className="mt-2 text-sm font-bold ">{item.name}</span>
                   </button>
                 ) : (
-                    <a
-                    key={item.name}
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center text-center hover:text-secondaire transform transition duration-300 hover:scale-110"
-                    aria-label={`Visiter ${item.name}`}
-                    >
-                    {item.name === "github du projet" && <Github size={40} />}
-                    <span className="mt-2 text-sm font-bold ">{item.name}</span>
-                    </a>
+                <a
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center text-center hover:text-secondaire transform transition duration-300 hover:scale-110"
+                  aria-label={`Visiter ${item.name}`}
+                >
+                  {item.name === "github du projet" && <Github size={40} />}
+                  {item.name === "documentation" && <BookOpen size={40} />}
+                  <span className="mt-2 text-sm font-bold ">{item.name}</span>
+                </a>
                 )
               )}
           </section>

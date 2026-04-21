@@ -72,6 +72,7 @@ export const Presentation = () => {
                                             autoStart: true,
                                             loop: true,
                                             cursor: '_',
+                                            delay: 10,
                                         }}
                                     />
                                 </span>
