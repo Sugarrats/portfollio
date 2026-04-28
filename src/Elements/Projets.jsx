@@ -15,6 +15,7 @@ export default function Modal({
   setIsPrestaOpen,
   setIsDroitsOpen,
   setIsStagesOpen, 
+  setIsGsbOpen,
   setIsApiOpen,
   setIsAlternanceOpen,
   children,
@@ -79,7 +80,7 @@ export default function Modal({
     {
       tags: ["c#"],
       title: "application de gestion de base de données",
-      onClick: () => setIsDroitsOpen(true),
+      onClick: () => setIsGsbOpen(true),
       annee: "2iem année",
     },
 
@@ -91,7 +92,7 @@ export default function Modal({
         "base de donnée embarquées",
       ],
       title: "application mobile avec bd embarquée",
-      onClick: () => setIsDroitsOpen(true),
+      // onClick: () => setIsDroitsOpen(true),
       annee: "2iem année",
     },
 

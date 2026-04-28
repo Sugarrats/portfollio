@@ -1,4 +1,4 @@
-// Cette page va présenter mon alternance 
+// Cette page va présenter mon projet php 
 // avec des liens vers les documents produits
 // et vers le github du projet
 
@@ -77,12 +77,9 @@ export default function PhpApi({ isOpen, onClose, title = "application php utili
              durant ma deuxiéme année de bts j'ai du développé une application de gestion en php utilisant des API
             </p>
             <p>
-              ce travail c'est fait en équipe en utilisant la méthode de travail{" "}
-              <span className="text-secondaire font-bold">agile.</span>
+              ce travail c'est fait en équipe en utilisant la méthode de travail{" "}<span className="text-secondaire font-bold">agile.</span>
             </p>
-            <p>
-             et le modéle de développement{" "}
-              <span className="text-secondaire font-bold">mvc.</span>
+            <p>et le modéle de développement{" "} <span className="text-secondaire font-bold">mvc.</span>
             </p>
           </div>
 

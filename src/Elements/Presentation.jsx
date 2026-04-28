@@ -18,6 +18,7 @@ import VeillModal from './Veille';
 import PrestaModal from './Presta';
 import DroitsModal from './Droits';
 import ApiModal from './PhpApi';
+import LabGSBModal from './Gsb';
 
 export const Presentation = () => {
 
@@ -33,6 +34,7 @@ export const Presentation = () => {
     const [isLienOpen, setIsLienOpen] = useState(false);
     const [isActuOpen, setIsActuOpen] = useState(false);
     const [isStagesOpen, setIsStagesOpen] = useState(false);
+    const [isGsbOpen, setIsGsbOpen] = useState(false);
     const [isAlternanceOpen, setIsAlternanceOpen] = useState(false); // new alternance state
     const [isContactOpen, setIsContactOpen] = useState(false);
     const [isApiOpen, setIsApiOpen] = useState (false);
@@ -181,6 +183,7 @@ export const Presentation = () => {
                 setIsVeilleOpen={setIsVeilleOpen}
                 setIsDroitsOpen={setIsDroitsOpen}
                 setIsStagesOpen={setIsStagesOpen} // forward stage setter
+                setIsGsbOpen={setIsGsbOpen}
                 setIsAlternanceOpen={setIsAlternanceOpen} // forward alternance setter
                 setIsApiOpen={setIsApiOpen}
             />
@@ -240,6 +243,11 @@ export const Presentation = () => {
             <ApiModal
                 isOpen={isApiOpen}
                 onClose={() => setIsApiOpen(false)}
+            />
+
+            <LabGSBModal
+                isOpen={setIsGsbOpen}
+                onClose={() => setIsGsbOpen(false)}
             />
 
         </section>
