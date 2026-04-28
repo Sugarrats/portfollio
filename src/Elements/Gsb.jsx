@@ -15,40 +15,37 @@ export default function LabGSBModal({ isOpen, onClose, title = "LabGSB — appli
     {
       name: "github du projet",
       href: "https://github.com/Sugarrats/LabGSB",
-      icon: <Github size={40} />,
-      type: "link",
     },
     {
       name: "manuel d'utilisation",
       href: "/Manuel_d_utilisation.pdf",
-      icon: <BookOpen size={40} />,
-      type: "pdf",
     },
     {
       name: "diagramme de classe",
       href: "/Diagramme_de_classe_métier.pdf",
-      icon: <GitBranch size={40} />,
-      type: "pdf",
     },
     {
       name: "MCD",
       href: "/MCD.jpg",
-      icon: <Database size={40} />,
-      type: "pdf",
     },
     {
       name: "MLD",
       href: "/MLD.png",
-      icon: <FileText size={40} />,
-      type: "pdf",
     },
     {
       name: "diagramme de Gantt",
       href: "/Gantt.pdf",
-      icon: <BarChart2 size={40} />,
-      type: "pdf",
     },
   ];
+
+  const getIcon = (name) => {
+    if (name === "github du projet") return <Github size={40} />;
+    if (name === "manuel d'utilisation") return <BookOpen size={40} />;
+    if (name === "diagramme de classe") return <GitBranch size={40} />;
+    if (name === "MCD") return <Database size={40} />;
+    if (name === "MLD") return <FileText size={40} />;
+    if (name === "diagramme de Gantt") return <BarChart2 size={40} />;
+  };
 
   useEffect(() => {
     setIsMounted(true);
@@ -59,6 +56,7 @@ export default function LabGSBModal({ isOpen, onClose, title = "LabGSB — appli
 
     handleResize();
     window.addEventListener("resize", handleResize);
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -69,9 +67,9 @@ export default function LabGSBModal({ isOpen, onClose, title = "LabGSB — appli
       <Draggable nodeRef={nodeRef} disabled={isMobile} cancel="input,textarea,button,label">
         <div
           ref={nodeRef}
-          style={{ maxHeight: "85vh" }}
+          style={{ maxHeight: "80vh" }}
           className={`
-            bg-background border-2 border-bordure rounded-lg shadow-lg
+            bg-background border-2 border-bordure rounded-lg shadow-lg 
             pointer-events-auto flex flex-col
             w-full ${isMobile ? "max-w-[95%]" : "max-w-lg sm:max-w-xl md:w-1/2"}
             overflow-hidden
@@ -112,36 +110,34 @@ export default function LabGSBModal({ isOpen, onClose, title = "LabGSB — appli
             </p>
           </div>
 
-          {/* Body scrollable — liens documents */}
-          <section className="p-4 overflow-y-auto flex-1">
-            <div className="flex flex-wrap justify-center gap-6">
-              {children ??
-                LiensLabGSB.map((item) =>
-                  item.type === "link" ? (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex flex-col items-center text-center hover:text-secondaire transform transition duration-300 hover:scale-110"
-                      aria-label={`Visiter ${item.name}`}
-                    >
-                      {item.icon}
-                      <span className="mt-2 text-sm font-bold">{item.name}</span>
-                    </a>
-                  ) : (
-                    <button
-                      key={item.name}
-                      onClick={() => window.open(item.href, "_blank")}
-                      className="flex flex-col items-center text-center hover:text-secondaire transform transition duration-300 hover:scale-110"
-                      aria-label={`Ouvrir ${item.name}`}
-                    >
-                      {item.icon}
-                      <span className="mt-2 text-sm font-bold">{item.name}</span>
-                    </button>
-                  )
-                )}
-            </div>
+          {/* Body scrollable */}
+          <section className="p-4 overflow-y-auto flex-1 flex flex-wrap justify-center gap-6">
+            {children ??
+              LiensLabGSB.map((item) =>
+                item.name === "github du projet" ? (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center text-center hover:text-secondaire transform transition duration-300 hover:scale-110"
+                    aria-label={`Visiter ${item.name}`}
+                  >
+                    {getIcon(item.name)}
+                    <span className="mt-2 text-sm font-bold">{item.name}</span>
+                  </a>
+                ) : (
+                  <button
+                    key={item.name}
+                    onClick={() => window.open(item.href, "_blank")}
+                    className="flex flex-col items-center text-center hover:text-secondaire transform transition duration-300 hover:scale-110"
+                    aria-label={`Ouvrir ${item.name}`}
+                  >
+                    {getIcon(item.name)}
+                    <span className="mt-2 text-sm font-bold">{item.name}</span>
+                  </button>
+                )
+              )}
           </section>
         </div>
       </Draggable>
