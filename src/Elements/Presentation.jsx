@@ -19,6 +19,7 @@ import PrestaModal from './Presta';
 import DroitsModal from './Droits';
 import ApiModal from './PhpApi';
 import LabGSBModal from './Gsb';
+import AndroidModal from './Android';
 
 export const Presentation = () => {
 
@@ -35,7 +36,8 @@ export const Presentation = () => {
     const [isActuOpen, setIsActuOpen] = useState(false);
     const [isStagesOpen, setIsStagesOpen] = useState(false);
     const [isGsbOpen, setIsGsbOpen] = useState(false);
-    const [isAlternanceOpen, setIsAlternanceOpen] = useState(false); // new alternance state
+    const [isAndroidOpen, setIsAndroidOpen] = useState(false);
+    const [isAlternanceOpen, setIsAlternanceOpen] = useState(false);
     const [isContactOpen, setIsContactOpen] = useState(false);
     const [isApiOpen, setIsApiOpen] = useState (false);
 
@@ -182,9 +184,10 @@ export const Presentation = () => {
                 setIsParcOpen={setIsParcOpen}
                 setIsVeilleOpen={setIsVeilleOpen}
                 setIsDroitsOpen={setIsDroitsOpen}
-                setIsStagesOpen={setIsStagesOpen} // forward stage setter
+                setIsStagesOpen={setIsStagesOpen} 
                 setIsGsbOpen={setIsGsbOpen}
-                setIsAlternanceOpen={setIsAlternanceOpen} // forward alternance setter
+                setIsAndroidOpen={setIsAndroidOpen}
+                setIsAlternanceOpen={setIsAlternanceOpen}
                 setIsApiOpen={setIsApiOpen}
             />
 
@@ -246,8 +249,13 @@ export const Presentation = () => {
             />
 
             <LabGSBModal
-                isOpen={setIsGsbOpen}
+                isOpen={isGsbOpen}
                 onClose={() => setIsGsbOpen(false)}
+            />
+
+            <AndroidModal
+                isOpen={isAndroidOpen}
+                onClose={() => setIsAndroidOpen(false)}
             />
 
         </section>

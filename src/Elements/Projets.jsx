@@ -16,6 +16,7 @@ export default function Modal({
   setIsDroitsOpen,
   setIsStagesOpen, 
   setIsGsbOpen,
+  setIsAndroidOpen,
   setIsApiOpen,
   setIsAlternanceOpen,
   children,
@@ -92,7 +93,7 @@ export default function Modal({
         "base de donnée embarquées",
       ],
       title: "application mobile avec bd embarquée",
-      // onClick: () => setIsDroitsOpen(true),
+      onClick: () => setIsAndroidOpen(true),
       annee: "2iem année",
     },
 
