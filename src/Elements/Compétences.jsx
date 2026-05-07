@@ -1,6 +1,6 @@
 // Cette page va présenter mes compétences avec des filtres pour chaque compétence
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import Draggable from "react-draggable";
 import Typewriter from "typewriter-effect";
 
@@ -33,6 +33,11 @@ export default function ModalCompétences({
   const [isMobile, setIsMobile] = useState(false);
   const [activeFilter, setActiveFilter] = useState(null);
 
+  // Resize
+  const [size, setSize] = useState({ width: 900, height: 600 });
+  const isResizing = useRef(false);
+  const resizeStart = useRef({ x: 0, y: 0, w: 0, h: 0 });
+
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
@@ -40,85 +45,100 @@ export default function ModalCompétences({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const onMouseDownResize = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    isResizing.current = true;
+    resizeStart.current = {
+      x: e.clientX,
+      y: e.clientY,
+      w: size.width,
+      h: size.height,
+    };
+
+    const onMouseMove = (e) => {
+      if (!isResizing.current) return;
+      const newW = Math.max(400, resizeStart.current.w + (e.clientX - resizeStart.current.x));
+      const newH = Math.max(300, resizeStart.current.h + (e.clientY - resizeStart.current.y));
+      setSize({ width: newW, height: newH });
+    };
+
+    const onMouseUp = () => {
+      isResizing.current = false;
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+  }, [size]);
+
   if (!isOpen) return null;
 
-  // Les réalisations avec les compétences cochées (cases vertes du tableau E5)
-  // onClick ouvre la modale du projet correspondant
   const realisations = [
     {
       titre: "site d'un bar (html, css, bootstrap, php, javascript)",
       periode: "01/09/2024 - 26/05/2025",
-      type: "formation",
       onClick: () => setIsWebBarOpen(true),
       competences: { C: false, D: false, E: true, F: false, G: true, H: false },
     },
     {
       titre: "portfolio personnel",
       periode: "27/06/2025 - 14/04/2026",
-      type: "formation",
       onClick: null,
       competences: { C: false, D: false, E: false, F: false, G: false, H: true },
     },
     {
       titre: "gestion de droits utilisateurs avec linux",
       periode: "23/11/2024 - 20/12/2024",
-      type: "formation",
       onClick: () => setIsDroitsOpen(true),
       competences: { C: true, D: false, E: false, F: false, G: false, H: false },
     },
     {
       titre: "suivi des incidents avec GLPI",
       periode: "03/03/2025 - 07/03/2026",
-      type: "formation",
       onClick: () => setIsParcOpen(true),
       competences: { C: true, D: true, E: false, F: false, G: false, H: false },
     },
     {
       titre: "site e-commerce prestashop",
       periode: "01/04/2025 - 01/05/2026",
-      type: "formation",
       onClick: () => setIsPrestaOpen(true),
       competences: { C: true, D: true, E: true, F: true, G: false, H: false },
     },
     {
       titre: "application c# de gestion d'incidents (LabGSB)",
       periode: "01/11/2025 - 31/12/2025",
-      type: "formation",
       onClick: () => setIsGsbOpen(true),
       competences: { C: true, D: true, E: false, F: true, G: true, H: false },
     },
     {
       titre: "application android avec bd sqlite",
       periode: "15/12/2025 - 12/01/2026",
-      type: "formation",
       onClick: () => setIsAndroidOpen(true),
       competences: { C: false, D: true, E: false, F: false, G: true, H: false },
     },
     {
       titre: "api php/json + application php (méthode agile)",
       periode: "12/03/2026 - 02/04/2026",
-      type: "formation",
       onClick: () => setIsApiOpen(true),
       competences: { C: false, D: false, E: false, F: true, G: true, H: false },
     },
     {
       titre: "veille technologique (langage zig)",
       periode: "2025 - 2026",
-      type: "formation",
       onClick: () => setIsVeilleOpen(true),
       competences: { C: false, D: false, E: false, F: false, G: false, H: true },
     },
     {
       titre: "stage imft — macros excel en visual basic",
       periode: "26/05/2025 - 27/06/2025",
-      type: "stage",
       onClick: () => setIsStagesOpen(true),
       competences: { C: false, D: true, E: false, F: true, G: true, H: true },
     },
     {
       titre: "alternance drafpica — application web c# (api yparéo)",
       periode: "03/11/2025 - 30/06/2026",
-      type: "alternance",
       onClick: () => setIsAlternanceOpen(true),
       competences: { C: false, D: true, E: false, F: true, G: true, H: true },
     },
@@ -133,17 +153,18 @@ export default function ModalCompétences({
       <Draggable
         nodeRef={nodeRef}
         disabled={isMobile}
-        cancel="input,textarea,button,label"
+        cancel="input,textarea,button,label,.resize-handle"
       >
         <div
           ref={nodeRef}
-          style={{ maxHeight: "85vh" }}
-          className={`
-            bg-background border-2 border-bordure rounded-lg shadow-lg
-            pointer-events-auto flex flex-col
-            w-full ${isMobile ? "max-w-[95%]" : "max-w-2xl md:w-3/5"}
-            overflow-hidden
-          `}
+          style={{
+            width: isMobile ? "95vw" : size.width,
+            height: isMobile ? "90vh" : size.height,
+            maxWidth: "98vw",
+            maxHeight: "95vh",
+            position: "relative",
+          }}
+          className="bg-background border-2 border-bordure rounded-lg shadow-lg pointer-events-auto flex flex-col overflow-hidden"
         >
           {/* Header */}
           <div
@@ -186,8 +207,8 @@ export default function ModalCompétences({
           </div>
 
           {/* Corps scrollable */}
-          <section className="p-4 overflow-y-auto flex-1 flex flex-col gap-4 min-h-[150px]">
-            <p className="text-left text-sm sm:text-base w-full">
+          <section className="p-4 overflow-y-auto flex-1 flex flex-col gap-4 min-h-0">
+            <p className="text-left text-sm sm:text-base w-full flex-shrink-0">
               <Typewriter
                 options={{
                   strings: [
@@ -204,20 +225,20 @@ export default function ModalCompétences({
             </p>
 
             {/* Tableau */}
-            <div className="overflow-x-auto w-full">
+            <div className="overflow-auto w-full flex-1">
               <table className="w-full text-xs border-collapse">
                 <thead>
                   <tr>
-                    <th className="border border-bordure px-2 py-1 text-left bg-primaire text-fenetre font-semibold min-w-[160px]">
+                    <th className="border border-bordure px-2 py-1 text-left bg-primaire text-fenetre font-semibold min-w-[180px]">
                       réalisation
                     </th>
-                    <th className="border border-bordure px-2 py-1 text-left bg-primaire text-fenetre font-semibold min-w-[100px]">
+                    <th className="border border-bordure px-2 py-1 text-left bg-primaire text-fenetre font-semibold min-w-[110px]">
                       période
                     </th>
                     {COMPETENCES.map((c) => (
                       <th
                         key={c.id}
-                        className={`border border-bordure px-2 py-1 text-center font-semibold min-w-[60px] transition ${
+                        className={`border border-bordure px-2 py-1 text-center font-semibold min-w-[80px] transition ${
                           activeFilter === c.id
                             ? "bg-secondaire text-fenetre"
                             : "bg-primaire text-fenetre"
@@ -238,29 +259,23 @@ export default function ModalCompétences({
                         r.onClick ? "cursor-pointer hover:bg-primaire/10" : ""
                       }`}
                     >
-                      <td className="border border-bordure px-2 py-1">
+                      <td className="border border-bordure px-2 py-2">
                         <span className={`font-medium ${r.onClick ? "underline underline-offset-2" : ""}`}>
                           {r.titre}
                         </span>
-                        <span
-                          className={`ml-1 text-[10px] px-1 rounded ${
-                            r.type === "alternance"
-                              ? "bg-secondaire text-fenetre"
-                              : r.type === "stage"
-                              ? "bg-primaire text-fenetre"
-                              : "bg-bordure text-text"
-                          }`}
-                        >
-                          {r.type}
-                        </span>
+                        {r.onClick && (
+                          <span className="ml-1 text-[10px] px-1 rounded bg-primaire text-fenetre">
+                            projet
+                          </span>
+                        )}
                       </td>
-                      <td className="border border-bordure px-2 py-1 text-center whitespace-nowrap">
+                      <td className="border border-bordure px-2 py-2 text-center whitespace-nowrap">
                         {r.periode}
                       </td>
                       {COMPETENCES.map((c) => (
                         <td
                           key={c.id}
-                          className={`border border-bordure px-2 py-1 text-center ${
+                          className={`border border-bordure px-2 py-2 text-center ${
                             r.competences[c.id] ? "bg-secondaire/30" : ""
                           }`}
                         >
@@ -283,6 +298,17 @@ export default function ModalCompétences({
               </p>
             )}
           </section>
+
+          {/* Poignée de redimensionnement (coin bas droite) */}
+          {!isMobile && (
+            <div
+              className="resize-handle absolute bottom-0 right-0 w-4 h-4 cursor-se-resize"
+              onMouseDown={onMouseDownResize}
+              style={{
+                background: "linear-gradient(135deg, transparent 50%, var(--color-bordure, #888) 50%)",
+              }}
+            />
+          )}
         </div>
       </Draggable>
     </div>
