@@ -8,15 +8,21 @@ export default function Modal({ isOpen, onClose, title = "veille", children }) {
   const nodeRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
 
-    const LiensVeille = [
-  
-      // Présentation
-      {
-        name: "présentation du sujet de veille",
-        href: "/Veille.pdf",
-      },
-  
-    ];
+  const LiensVeille = [
+
+    // Présentation
+    {
+      name: "présentation du sujet de veille",
+      href: "/Veille.pdf",
+    },
+
+    // Site officiel Zig
+    {
+      name: "actualités ZIG",
+      href: "https://ziglang.org/news/",
+    },
+
+  ];
 
   useEffect(() => {
     const handleResize = () => {
