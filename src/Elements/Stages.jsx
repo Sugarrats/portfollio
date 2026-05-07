@@ -76,7 +76,7 @@ export default function StageModal({ isOpen, onClose, title = "stage imft", chil
             </p>
             <p>
               la mission du stage était de développer une application de comptabilité avec{" "}
-              <span className="text-secondaire font-bold">visual basic.</span>
+              <span className="text-secondaire font-bold">visual basic for application.</span>
             </p>
           </div>
 
