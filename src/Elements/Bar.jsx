@@ -87,7 +87,7 @@ export default function Modal({ isOpen, onClose, title = "bar", children }) {
             </p>
 
             <p>
-              ce projet constituait un entrainement à plusieurs technologies de développement web comme
+              ce projet constituait un entraînement à plusieurs technologies de développement web comme
               <span className="text-secondaire font-bold">
                 {" "}
                 html, css, bootstrap, php, et sql pour la création de base de données.

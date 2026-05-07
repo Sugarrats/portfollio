@@ -78,14 +78,14 @@ export default function AlternanceModal({ isOpen, onClose, title = "alternance d
           {/* Infos alternance */}
           <div className="px-4 py-2 space-y-2 text-primaire text-base">
             <p>
-              de novembre 2025 à juin 2026 j'ai effectuer une alternance à la direction régionale académique à la formation professionnelle initiale, continue et l'apprentissage 
+              de novembre 2025 à juin 2026 j'ai effectué une alternance à la direction régionale académique à la formation professionnelle initiale, continue et à l'apprentissage 
             </p>
             <p>
               la mission de l'alternance était de développer une application de gestion interne utilisant les api yparéo en{" "}
               <span className="text-secondaire font-bold">c#.</span>
             </p>
             <p>
-              lors de cette j'ai pu concevoir une application de a à z en autonomie, de la définition initial des besoins au déploiment final. 
+              lors de cette alternance j'ai pu concevoir une application de a à z en autonomie, de la définition initiale des besoins au déploiement final. 
             </p>
           </div>
 

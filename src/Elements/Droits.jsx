@@ -72,7 +72,7 @@ export default function Modal({ isOpen, onClose, title = "gestion de droits", ch
             </p>
 
             <p>
-                ce projet m'a appris, <span className="text-secondaire font-bold">l'installation d'une machine virtuelle linux, les commandes de bases en linux, la gestion et la mise en place des droits de différents utilisateurs.</span>
+                ce projet m'a appris, <span className="text-secondaire font-bold">l'installation d'une machine virtuelle linux, les commandes de base en linux, la gestion et la mise en place des droits de différents utilisateurs.</span>
             </p>
           </div>
 

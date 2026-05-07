@@ -75,7 +75,7 @@ export default function StageModal({ isOpen, onClose, title = "stage imft", chil
               du 26 mai 2025 au 27 juin 2025, j'ai fait un stage à l'institut de mécanique des fluides de toulouse.
             </p>
             <p>
-              la mission du stage était de développer une application de comptabilitée avec{" "}
+              la mission du stage était de développer une application de comptabilité avec{" "}
               <span className="text-secondaire font-bold">visual basic.</span>
             </p>
           </div>

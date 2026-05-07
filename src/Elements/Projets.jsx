@@ -25,7 +25,7 @@ export default function Modal({
   const [isMobile, setIsMobile] = useState(false);
   const [activeFilters, setActiveFilters] = useState([]); // multiple filters
 
-  // ajouter touts les nouveaux projets ici
+  // ajouter tous les nouveaux projets ici
   // chaque projet est identifié avec un ou plusieurs tags
   const projects = [
 
@@ -34,7 +34,7 @@ export default function Modal({
       tags: ["web"],
       title: "site d'un bar",
       onClick: () => setIsWebBarOpen(true),
-      annee: "1ere année",
+      annee: "1ère année",
     },
 
     // parc informatique
@@ -42,7 +42,7 @@ export default function Modal({
       tags: ["parc"],
       title: "gestion de parc",
       onClick: () => setIsParcOpen(true),
-      annee: "1ere année",
+      annee: "1ère année",
     },
 
     // veille
@@ -50,7 +50,7 @@ export default function Modal({
       tags: ["veille"],
       title: "veille informatique",
       onClick: () => setIsVeilleOpen(true),
-      annee: "1ere année",
+      annee: "1ère année",
     },
 
     // presta
@@ -58,7 +58,7 @@ export default function Modal({
       tags: ["web"],
       title: "boutique prestashop",
       onClick: () => setIsPrestaOpen(true),
-      annee: "1ere année",
+      annee: "1ère année",
     },
 
     // droits linux
@@ -66,15 +66,15 @@ export default function Modal({
       tags: ["parc"],
       title: "gestion de droits sur linux",
       onClick: () => setIsDroitsOpen(true),
-      annee: "1ere année",
+      annee: "1ère année",
     },
 
-    // stage 1er année 
+    // stage 1ère année 
     {
       tags: ["visual basic", "stage"],
       title: "application web de gestion interne",
       onClick: () => setIsStagesOpen(true),
-      annee: "1ere année",
+      annee: "1ère année",
     },
 
     // Application de gestion de base de données avec c#
@@ -82,7 +82,7 @@ export default function Modal({
       tags: ["c#"],
       title: "application de gestion de base de données",
       onClick: () => setIsGsbOpen(true),
-      annee: "2iem année",
+      annee: "2ième année",
     },
 
     // application mobile avec android studio
@@ -90,11 +90,11 @@ export default function Modal({
       tags: [
         "developpement mobile",
         "java",
-        "base de donnée embarquées",
+        "base de données embarquées",
       ],
       title: "application mobile avec bd embarquée",
       onClick: () => setIsAndroidOpen(true),
-      annee: "2iem année",
+      annee: "2ième année",
     },
 
     // application php utilisant des api avec la méthode agile
@@ -107,7 +107,7 @@ export default function Modal({
       ],
       title: "application php utilisant des api.",
       onClick: () => setIsApiOpen(true),
-      annee: "2iem année",
+      annee: "2ième année",
     },
 
     // projet alternance
@@ -115,7 +115,7 @@ export default function Modal({
       tags: ["c#", "web", "alternance", "api"],
       title: "développement d'une application web de gestion interne",
       onClick: () => setIsAlternanceOpen(true),
-      annee: "2iem année",
+      annee: "2ième année",
     },
   ];
 
@@ -138,7 +138,7 @@ export default function Modal({
 
   const toggleFilter = (filter) => {
     if (filter === "all") {
-      setActiveFilters([]); //Selectione tout
+      setActiveFilters([]); // sélectionne tout
     } else {
 
       setActiveFilters((prev) => // cherche les filtres actifs
@@ -227,7 +227,7 @@ export default function Modal({
             </div>
           </div>
 
-          {/* Présentations des cprojets accomplis pendant ma formation */}
+          {/* présentation des projets accomplis pendant ma formation */}
           <section className="p-4 overflow-y-auto flex-1 flex flex-col items-center gap-4 min-h-[150px] text-center">
             <p className="text-left text-sm sm:text-base w-full max-w-full">
               <Typewriter

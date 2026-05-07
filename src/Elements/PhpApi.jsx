@@ -74,12 +74,12 @@ export default function PhpApi({ isOpen, onClose, title = "application php utili
           {/* Infos PHP API */}
           <div className="px-4 py-2 space-y-2 text-primaire text-base">
             <p>
-             durant ma deuxiéme année de bts j'ai du développé une application de gestion en php utilisant des API
+             durant ma deuxième année de bts j'ai dû développer une application de gestion en php utilisant des API
             </p>
             <p>
-              ce travail c'est fait en équipe en utilisant la méthode de travail{" "}<span className="text-secondaire font-bold">agile.</span>
+              ce travail s'est fait en équipe en utilisant la méthode de travail{" "}<span className="text-secondaire font-bold">agile.</span>
             </p>
-            <p>et le modéle de développement{" "} <span className="text-secondaire font-bold">mvc.</span>
+            <p>et le modèle de développement{" "} <span className="text-secondaire font-bold">mvc.</span>
             </p>
           </div>
 

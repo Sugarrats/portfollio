@@ -1,13 +1,10 @@
-// Cette page va présenter la gestion des parcs informatiques que j'ai appris pendant ma formation.
-
+// Cette page va présenter la gestion des parcs informatiques que j'ai apprise pendant ma formation.
 import React, { useRef, useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { FileUser } from "lucide-react";
-
 export default function Modal({ isOpen, onClose, title = "gestion de parc", children }) {
   const nodeRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
-
     const LiensBar = [
   
       // Compte rendu
@@ -17,20 +14,15 @@ export default function Modal({ isOpen, onClose, title = "gestion de parc", chil
       },
   
     ];
-
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768); // mobile < 768px
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
   if (!isOpen) return null;
-
   return (
     <div className="fixed inset-0 bg-background/50 pointer-events-none flex justify-center items-center z-[99999] p-4 sm:p-6">
       <Draggable
@@ -65,18 +57,16 @@ export default function Modal({ isOpen, onClose, title = "gestion de parc", chil
               ✕
             </button>
           </div>
-
           {/* Infos parc */}
           <div className="px-4 py-2 space-y-2 text-primaire text-base text-left">
             <p>
               pendant ma formation j'ai appris la gestion d'un parc informatique pour une entreprise.
             </p>
             <p>
-              pour celà j'ai utilisé l'application {" "}
+              pour cela j'ai utilisé l'application {" "}
               <span className="text-secondaire font-bold">GLPI.</span>
             </p>
           </div>
-
           {/* Body scrollable */}
           <section className="p-4 overflow-y-auto flex-1 flex justify-center space-x-8">
             {children ??

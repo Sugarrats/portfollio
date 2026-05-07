@@ -1,13 +1,10 @@
 // Cette page va présenter mes compétences sur prestashop, avec des liens vers des documents PDF.
-
 import React, { useRef, useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { FileUser } from "lucide-react";
-
 export default function Modal({ isOpen, onClose, title = "prestashop", children }) {
   const nodeRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
-
     const LiensPresta = [
   
       // Compte rendu
@@ -15,33 +12,26 @@ export default function Modal({ isOpen, onClose, title = "prestashop", children 
         name: "compte rendu",
         href: "/Compte_rendu_presta.pdf",
       },
-
       // Cahier des charges
       {
         name: "cahier des charges",
         href: "/Cahier_des_charges_presta.pdf",
       },
-
       // Charte graphique
       {
         name: "charte graphique",
         href: "/Charte_graphique_presta.pdf",
       },
     ];
-
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768); // mobile < 768px
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
   if (!isOpen) return null;
-
   return (
     <div className="fixed inset-0 bg-background/50 pointer-events-none flex justify-center items-center z-[99999] p-4 sm:p-6">
       <Draggable
@@ -76,15 +66,13 @@ export default function Modal({ isOpen, onClose, title = "prestashop", children 
               ✕
             </button>
           </div>
-
           {/* Infos presta */}
           <div className="px-4 py-2 space-y-2 text-primaire text-base text-left">
             <p>
-              pendant ma formation j'ai appris à maitriser <span className="text-secondaire font-bold">prestahop. </span>
+              pendant ma formation j'ai appris à maîtriser <span className="text-secondaire font-bold">prestashop. </span>
               pour créer une boutique en ligne.
             </p>
           </div>
-
           {/* Body scrollable */}
           <section className="p-4 overflow-y-auto flex-1 flex justify-center space-x-8">
             {children ??

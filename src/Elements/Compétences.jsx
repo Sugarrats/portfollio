@@ -1,4 +1,4 @@
-// Cette page va présenter mes compétences avec des filtres pour chaque compétences
+// Cette page va présenter mes compétences avec des filtres pour chaque compétence
 
 import React, { useRef, useEffect, useState } from "react";
 import Draggable from "react-draggable";
@@ -14,19 +14,19 @@ export default function ModalCompétences({ isOpen, onClose, title = "compétenc
   const compétences = [
 
     // Compétences Développement logiciel
-    { id: "développement", title: "c#", description: "développement d’applications orientées objet." },
+    { id: "développement", title: "c#", description: "développement d'applications orientée objet." },
     { id: "développement", title: "c++", description: "programmation bas-niveau et logiciels performants." },
-    { id: "développement", title: "visual basic", description: "création d’outils et automatisations pour excel." },
+    { id: "développement", title: "visual basic", description: "création d'outils et automatisations pour excel." },
     { id: "développement", title: "python", description: "scripts et prototypes rapides." },
 
     // Systèmes et réseaux
     { id: "systèmes", title: "commandes de base linux", description: "gestion du système et des fichiers." },
     { id: "systèmes", title: "gestion de droits linux", description: "permissions utilisateurs et sécurité." },
-    { id: "systèmes", title: "installation de machines virtuelles", description: "déploiement d’environnements isolés." },
+    { id: "systèmes", title: "installation de machines virtuelles", description: "déploiement d'environnements isolés." },
 
     // Bases de données
     { id: "bases de données", title: "requêtes sql", description: "interrogation et gestion des données." },
-    { id: "bases de données", title: "gestion de bases de données", description: " administration des systèmes de gestion de bases relationnelles." },
+    { id: "bases de données", title: "gestion de bases de données", description: "administration des systèmes de gestion de bases relationnelles." },
 
     // Gestion IT
     { id: " gestion it", title: "glpi", description: "gestion de parc informatique et tickets de support." },
