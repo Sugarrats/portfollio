@@ -174,6 +174,16 @@ export const Presentation = () => {
             <CompetencesModal
                 isOpen={isCompetencesOpen}
                 onClose={() => setIsCompetencesOpen(false)}
+                setIsWebBarOpen={setIsWebBarOpen}
+                setIsParcOpen={setIsParcOpen}
+                setIsVeilleOpen={setIsVeilleOpen}
+                setIsPrestaOpen={setIsPrestaOpen}
+                setIsDroitsOpen={setIsDroitsOpen}
+                setIsStagesOpen={setIsStagesOpen}
+                setIsGsbOpen={setIsGsbOpen}
+                setIsAndroidOpen={setIsAndroidOpen}
+                setIsApiOpen={setIsApiOpen}
+                setIsAlternanceOpen={setIsAlternanceOpen}
             />
 
             <ProjetModal
