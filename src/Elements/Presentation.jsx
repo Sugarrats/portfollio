@@ -64,7 +64,7 @@ export const Presentation = () => {
 
                         <div className="p-2 flex justify-center">
                             <h1 className="flex flex-col sm:flex-row items-center gap-1.5 text-center text-sm sm:text-base font-bold">
-                                <span className="text-primaire">je suis</span>
+                                <span className="text-primaire">je suis étudiant </span>
                                 <span className="text-secondaire">
                                     <Typewriter
                                         options={{
