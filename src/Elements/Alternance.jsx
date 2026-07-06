@@ -15,7 +15,7 @@ export default function AlternanceModal({ isOpen, onClose, title = "alternance d
   const LiensAlternance = [
     {
       name: "github du projet",
-      href: "https://github.com/Sugarrats/mutuaform",
+      href: "https://github.com/MutuaForm-drafpica-toulouse/mutuaform",
     },
     {
       name: "rapport d'alternance",

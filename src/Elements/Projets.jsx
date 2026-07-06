@@ -29,6 +29,14 @@ export default function Modal({
   // chaque projet est identifié avec un ou plusieurs tags
   const projects = [
 
+    // projet alternance / mutuaform (projet phare)
+    {
+      tags: ["c#", "web", "alternance", "api"],
+      title: "mutuaform : gestion des formateurs (alternance)",
+      onClick: () => setIsAlternanceOpen(true),
+      annee: "2ième année",
+    },
+
     // bar a theme
     {
       tags: ["web"],
@@ -110,13 +118,6 @@ export default function Modal({
       annee: "2ième année",
     },
 
-    // projet alternance
-    {
-      tags: ["c#", "web", "alternance", "api"],
-      title: "développement d'une application web de gestion interne",
-      onClick: () => setIsAlternanceOpen(true),
-      annee: "2ième année",
-    },
   ];
 
   // Filtres par type de projet (tags) et par année
@@ -233,7 +234,7 @@ export default function Modal({
               <Typewriter
                 options={{
                   strings: [
-                    "au cours de mon bts, j'ai réalisé plusieurs projets dans des domaines variés : <span class='text-secondaire font-bold'>développement web, applications, veille technologique, gestion de parc informatique...</span> vous pouvez découvrir l'intégralité de mes projets ici.",
+                    "titulaire du bts sio option slam, j'ai réalisé plusieurs projets dans des domaines variés : <span class='text-secondaire font-bold'>développement web, applications, veille technologique, gestion de parc informatique...</span> notamment durant mon alternance, où j'ai développé <span class='text-secondaire font-bold'>mutuaform</span>, une application complète de gestion des formateurs pour la drafpica de toulouse. vous pouvez découvrir l'intégralité de mes projets ici.",
                   ],
                   autoStart: true,
                   loop: false,

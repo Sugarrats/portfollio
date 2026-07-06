@@ -64,14 +64,17 @@ export const Presentation = () => {
 
                         <div className="p-2 flex justify-center">
                             <h1 className="flex flex-col sm:flex-row items-center gap-1.5 text-center text-sm sm:text-base font-bold">
-                                <span className="text-primaire">je suis étudiant</span>
+                                <span className="text-primaire">titulaire du bts sio option slam, j'ai des compétences en</span>
                                 <span className="text-secondaire">
                                     <Typewriter
                                         options={{
                                             strings: [
-                                                "< développeur fullstack />",
-                                                "< développeur d'application />",
-                                                "< administrateur de bases de données />",
+                                                "< c# / .net />",
+                                                "< développement web />",
+                                                "< développement mobile />",
+                                                "< api rest />",
+                                                "< postgresql />",
+                                                "< php />",
                                             ],
                                             autoStart: true,
                                             loop: true,
