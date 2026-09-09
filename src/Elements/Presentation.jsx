@@ -62,27 +62,30 @@ export const Presentation = () => {
                         </div>
 
 
-                        <div className="p-2 flex justify-center">
-                            <h1 className="flex flex-col sm:flex-row items-center gap-1.5 text-center text-sm sm:text-base font-bold">
-                                <span className="text-primaire">titulaire du bts sio option slam, je suis actuellement étudiant en troisième année de licence Méthodes Informatiques Appliqués à la Gestion des Entreprises</span>
-                                <span className="text-primaire">contactez moi pour vos missions de </span>
-                                <span className="text-secondaire">
-                                    <Typewriter
-                                        options={{
-                                            strings: [
-                                                "< développement d'application c# / .net />",
-                                                "< développement de site web />",
-                                                "< développement mobile />",
-                                            ],
-                                            autoStart: true,
-                                            loop: true,
-                                            cursor: '_',
-                                            delay: 20,
-                                        }}
-                                    />
-                                </span>
-                            </h1>
-                        </div>
+                <div className="p-2 flex justify-center">
+                    <h1 className="flex flex-col items-center gap-1.5 text-center text-sm sm:text-base font-bold max-w-3xl">
+                        <span className="text-primaire">
+                            titulaire du bts sio option slam, je suis actuellement étudiant en troisième année
+                            de licence méthodes informatiques appliquées à la gestion des entreprises
+                        </span>
+                        <span className="text-primaire">contactez moi pour vos missions de</span>
+                        <span className="text-secondaire block w-full min-h-[1.5em]">
+                            <Typewriter
+                                options={{
+                                    strings: [
+                                        "< développement d'application c# / .net />",
+                                        "< développement de site web />",
+                                        "< développement mobile />",
+                                    ],
+                                    autoStart: true,
+                                    loop: true,
+                                    cursor: '_',
+                                    delay: 20,
+                                }}
+                            />
+                        </span>
+                    </h1>
+                </div>
 
 
                         <div className="h-5"></div>
