@@ -66,9 +66,9 @@ export const Presentation = () => {
                     <h1 className="flex flex-col items-center gap-1.5 text-center text-sm sm:text-base font-bold max-w-3xl">
                         <span className="text-primaire">
                             titulaire du bts sio option slam, je suis actuellement étudiant en troisième année
-                            de licence méthodes informatiques appliquées à la gestion des entreprises
+                            de licence méthodes informatiques appliquées à la gestion des entreprises.
                         </span>
-                        <span className="text-primaire">contactez moi pour vos missions de</span>
+                        <span className="text-primaire">contactez moi pour vos missions de :</span>
                         <span className="text-secondaire block w-full min-h-[1.5em]">
                             <Typewriter
                                 options={{
