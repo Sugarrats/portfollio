@@ -34,7 +34,7 @@ export default function Modal({
       tags: ["c#", "web", "alternance", "api"],
       title: "mutuaform : gestion des formateurs (alternance)",
       onClick: () => setIsAlternanceOpen(true),
-      annee: "2ième année",
+      annee: "2ième année BTS",
     },
 
     // bar a theme
@@ -42,7 +42,7 @@ export default function Modal({
       tags: ["web"],
       title: "site d'un bar",
       onClick: () => setIsWebBarOpen(true),
-      annee: "1ère année",
+      annee: "1ère année BTS",
     },
 
     // parc informatique
@@ -50,7 +50,7 @@ export default function Modal({
       tags: ["parc"],
       title: "gestion de parc",
       onClick: () => setIsParcOpen(true),
-      annee: "1ère année",
+      annee: "1ère année BTS",
     },
 
     // veille
@@ -58,7 +58,7 @@ export default function Modal({
       tags: ["veille"],
       title: "veille informatique",
       onClick: () => setIsVeilleOpen(true),
-      annee: "1ère année",
+      annee: "1ère année BTS",
     },
 
     // presta
@@ -66,7 +66,7 @@ export default function Modal({
       tags: ["web"],
       title: "boutique prestashop",
       onClick: () => setIsPrestaOpen(true),
-      annee: "1ère année",
+      annee: "1ère année BTS",
     },
 
     // droits linux
@@ -74,7 +74,7 @@ export default function Modal({
       tags: ["parc"],
       title: "gestion de droits sur linux",
       onClick: () => setIsDroitsOpen(true),
-      annee: "1ère année",
+      annee: "1ère année BTS",
     },
 
     // stage 1ère année 
@@ -82,7 +82,7 @@ export default function Modal({
       tags: ["visual basic", "stage"],
       title: "application web de gestion interne",
       onClick: () => setIsStagesOpen(true),
-      annee: "1ère année",
+      annee: "1ère année BTS",
     },
 
     // Application de gestion de base de données avec c#
@@ -90,7 +90,7 @@ export default function Modal({
       tags: ["c#"],
       title: "application de gestion de base de données",
       onClick: () => setIsGsbOpen(true),
-      annee: "2ième année",
+      annee: "2ième année BTS",
     },
 
     // application mobile avec android studio
@@ -102,7 +102,7 @@ export default function Modal({
       ],
       title: "application mobile avec bd embarquée",
       onClick: () => setIsAndroidOpen(true),
-      annee: "2ième année",
+      annee: "2ième année BTS",
     },
 
     // application php utilisant des api avec la méthode agile
@@ -115,7 +115,7 @@ export default function Modal({
       ],
       title: "application php utilisant des api.",
       onClick: () => setIsApiOpen(true),
-      annee: "2ième année",
+      annee: "2ième année BTS",
     },
 
   ];
